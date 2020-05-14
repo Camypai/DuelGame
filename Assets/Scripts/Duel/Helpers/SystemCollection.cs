@@ -6,11 +6,11 @@ namespace Duel.Helpers
 {
     public class SystemCollection
     {
-        public List<IAwakeSystem> AwakeSystems = new List<IAwakeSystem>();
-        public List<IStartSystem> StartSystems = new List<IStartSystem>();
-        public List<IUpdateSystem> UpdateSystems = new List<IUpdateSystem>();
-        public List<IFixedUpdateSystem> FixedUpdateSystems = new List<IFixedUpdateSystem>();
-        public List<ILateUpdateSystem> LateUpdateSystems = new List<ILateUpdateSystem>();
+        public readonly List<IAwakeSystem> AwakeSystems = new List<IAwakeSystem>();
+        public readonly List<IStartSystem> StartSystems = new List<IStartSystem>();
+        public readonly List<IUpdateSystem> UpdateSystems = new List<IUpdateSystem>();
+        public readonly List<IFixedUpdateSystem> FixedUpdateSystems = new List<IFixedUpdateSystem>();
+        public readonly List<ILateUpdateSystem> LateUpdateSystems = new List<ILateUpdateSystem>();
 
         public void Add<T>(T item)
         {
