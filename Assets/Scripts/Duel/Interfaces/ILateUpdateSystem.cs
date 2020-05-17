@@ -1,6 +1,6 @@
 ﻿namespace Duel.Interfaces
 {
-    public interface ILateUpdateSystem
+    public interface ILateUpdateSystem : ISystem
     {
         void LateUpdate();
     }

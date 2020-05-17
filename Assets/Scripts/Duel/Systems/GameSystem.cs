@@ -1,4 +1,5 @@
-﻿using Duel.Helpers;
+﻿using Duel.Contexts;
+using Duel.Helpers;
 
 
 namespace Duel.Systems
@@ -14,9 +15,9 @@ namespace Duel.Systems
 
         #region ctor
 
-        public GameSystem()
+        public GameSystem(GameContext context)
         {
-            _systemCollection.Add(new DiceSystem());
+            _systemCollection.Add(new DiceSystem(context));
             _systemCollection.Add(new CharacterSystem());
         }
 

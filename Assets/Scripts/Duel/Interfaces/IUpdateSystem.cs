@@ -1,6 +1,6 @@
 ﻿namespace Duel.Interfaces
 {
-    public interface IUpdateSystem
+    public interface IUpdateSystem : ISystem
     {
         void Update();
     }

@@ -1,4 +1,5 @@
-﻿using Duel.Systems;
+﻿using Duel.Contexts;
+using Duel.Systems;
 using UnityEngine;
 
 
@@ -6,10 +7,13 @@ namespace Duel.Behaviour
 {
     public class GameController : MonoBehaviour
     {
-        private readonly GameSystem _gameSystem = new GameSystem();
+        private GameSystem _gameSystem;
 
         private void Awake()
         {
+            var gameContext = new GameContext();
+            _gameSystem = new GameSystem(gameContext);
+            
             _gameSystem.Awake();
         }
 

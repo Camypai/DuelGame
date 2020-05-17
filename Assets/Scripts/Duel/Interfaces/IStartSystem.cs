@@ -1,6 +1,6 @@
 ﻿namespace Duel.Interfaces
 {
-    public interface IStartSystem
+    public interface IStartSystem : ISystem
     {
         void Start();
     }

@@ -1,6 +1,6 @@
 ﻿namespace Duel.Interfaces
 {
-    public interface IAwakeSystem
+    public interface IAwakeSystem : ISystem
     {
         void Awake();
     }

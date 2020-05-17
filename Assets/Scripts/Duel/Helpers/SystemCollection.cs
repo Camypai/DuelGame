@@ -12,37 +12,31 @@ namespace Duel.Helpers
         public readonly List<IFixedUpdateSystem> FixedUpdateSystems = new List<IFixedUpdateSystem>();
         public readonly List<ILateUpdateSystem> LateUpdateSystems = new List<ILateUpdateSystem>();
 
-        public void Add<T>(T item)
+        public void Add(ISystem system)
         {
-            var type = typeof(T);
-            var interfaces = type.GetInterfaces();
-
-            foreach (var @interface in interfaces)
+            if (system is IAwakeSystem awake)
             {
-                if (@interface.Name.Equals(nameof(IAwakeSystem)))
-                {
-                    AwakeSystems.Add(item as IAwakeSystem);
-                }
+                AwakeSystems.Add(awake);
+            }
+            
+            if (system is IStartSystem start)
+            {
+                StartSystems.Add(start);
+            }
+            
+            if (system is IUpdateSystem update)
+            {
+                UpdateSystems.Add(update);
+            }
 
-                if (@interface.Name.Equals(nameof(IStartSystem)))
-                {
-                    StartSystems.Add(item as IStartSystem);
-                }
+            if (system is IFixedUpdateSystem fixedUpdate)
+            {
+                FixedUpdateSystems.Add(fixedUpdate);
+            }
 
-                if (@interface.Name.Equals(nameof(IUpdateSystem)))
-                {
-                    UpdateSystems.Add(item as IUpdateSystem);
-                }
-
-                if (@interface.Name.Equals(nameof(IFixedUpdateSystem)))
-                {
-                    FixedUpdateSystems.Add(item as IFixedUpdateSystem);
-                }
-
-                if (@interface.Name.Equals(nameof(ILateUpdateSystem)))
-                {
-                    LateUpdateSystems.Add(item as ILateUpdateSystem);
-                }
+            if (system is ILateUpdateSystem lateUpdate)
+            {
+                LateUpdateSystems.Add(lateUpdate);
             }
         }
     }
