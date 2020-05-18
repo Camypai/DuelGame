@@ -17,8 +17,11 @@ namespace Duel.Systems
 
         public GameSystem(GameContext context)
         {
+            _systemCollection.Add(new SetupSystem(context));
+            _systemCollection.Add(new WorldSystem(context));
             _systemCollection.Add(new DiceSystem(context));
-            _systemCollection.Add(new CharacterSystem());
+            _systemCollection.Add(new CharacterSystem(context));
+            _systemCollection.Add(new InputSystem(context));
         }
 
         #endregion

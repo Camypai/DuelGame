@@ -8,12 +8,13 @@ namespace Duel.ScriptableObjects
     public class DiceObject : ScriptableObject
     {
         [FormerlySerializedAs("Dice")] public GameObject dice;
-        [FormerlySerializedAs("FirstFace")] public Transform firstFace;
-        [FormerlySerializedAs("SecondFace")] public Transform secondFace;
-        [FormerlySerializedAs("ThirdFace")] public Transform thirdFace;
-        [FormerlySerializedAs("FourthFace")] public Transform fourthFace;
-        [FormerlySerializedAs("FifthFace")] public Transform fifthFace;
-        [FormerlySerializedAs("SixthFace")] public Transform sixthFace;
+        public float strange;
+        [FormerlySerializedAs("FirstFace")] public FaceObject firstFace;
+        [FormerlySerializedAs("SecondFace")] public FaceObject secondFace;
+        [FormerlySerializedAs("ThirdFace")] public FaceObject thirdFace;
+        [FormerlySerializedAs("FourthFace")] public FaceObject fourthFace;
+        [FormerlySerializedAs("FifthFace")] public FaceObject fifthFace;
+        [FormerlySerializedAs("SixthFace")] public FaceObject sixthFace;
         [FormerlySerializedAs("ActivePosition")] public Transform activePosition;
         [FormerlySerializedAs("HidePosition")] public Transform hidePosition;
     }
