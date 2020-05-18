@@ -1,23 +1,22 @@
 ﻿using Duel.Contexts;
 using Duel.Interfaces;
 using Duel.ScriptableObjects;
+using Duel.Services;
 using UnityEngine;
 
 
 namespace Duel.Systems
 {
-    public class SetupSystem : IAwakeSystem
+    public class SetupSystem : System, IAwakeSystem
     {
-        private readonly GameContext _context;
-        
-        public SetupSystem(GameContext context)
+        public SetupSystem(GameContext context, UsableServices services) : base(context, services)
         {
-            _context = context;
         }
         
         public void Awake()
         {
             _context.DiceObject = Data.DiceObject;
+            _context.CharacterObject = Data.CharacterObject;
         }
     }
 }

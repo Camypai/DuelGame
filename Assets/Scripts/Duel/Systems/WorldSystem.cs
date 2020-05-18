@@ -1,17 +1,15 @@
 ﻿using Duel.Contexts;
 using Duel.Interfaces;
+using Duel.Services;
 using UnityEngine;
 
 
 namespace Duel.Systems
 {
-    public class WorldSystem : IAwakeSystem
+    public class WorldSystem : System, IAwakeSystem
     {
-        private readonly GameContext _context;
-
-        public WorldSystem(GameContext context)
+        public WorldSystem(GameContext context, UsableServices services) : base(context, services)
         {
-            _context = context;
         }
 
         public void Awake()

@@ -1,17 +1,15 @@
 ﻿using Duel.Contexts;
 using Duel.Interfaces;
+using Duel.Services;
 using UnityEngine;
 
 
 namespace Duel.Systems
 {
-    public class InputSystem : IUpdateSystem
+    public class InputSystem : System, IUpdateSystem
     {
-        private GameContext _context;
-        
-        public InputSystem(GameContext context)
+        public InputSystem(GameContext context, UsableServices services) : base(context, services)
         {
-            _context = context;
         }
         
         public void Update()

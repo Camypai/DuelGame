@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5accd5c83274fe7ba7a35ccf91e43e1, type: 3}
-  m_Name: first_face 4
+  m_Script: {fileID: 11500000, guid: 3ba7d2f877a24cb7b7fb2abf46ec249f, type: 3}
+  m_Name: weapon
   m_EditorClassIdentifier: 
-  Transform: {fileID: 452992377240109559, guid: 6578614c68d4e3042ab7ab64c3e1d147,
-    type: 3}
-  Value: 1
+  weapon: {fileID: 5428461791709926870, guid: d2e9c78bd27d13949b2b73aaf9be7ca4, type: 3}
+  damage: 20

@@ -1,20 +1,19 @@
 ﻿using Duel.Contexts;
 using Duel.Entities;
 using Duel.Interfaces;
+using Duel.Services;
 using UnityEngine;
 
 
 namespace Duel.Systems
 {
-    public class DiceSystem : IAwakeSystem, IUpdateSystem
+    public class DiceSystem : System, IAwakeSystem, IUpdateSystem
     {
-        private readonly GameContext _context;
         private Dice _dice;
         private bool _isThrew = false;
         
-        public DiceSystem(GameContext context)
+        public DiceSystem(GameContext context, UsableServices services) : base(context, services)
         {
-            _context = context;
         }
 
         public void Awake()

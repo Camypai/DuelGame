@@ -18,8 +18,10 @@ namespace Duel.ScriptableObjects
         #region Fields
 
         [SerializeField] private string diceObjectPath;
+        [SerializeField] private string characterObjectPath;
         private static Data _instance;
         private static DiceObject _diceObject;
+        private static CharacterObject _characterObject;
 
         #endregion
         
@@ -43,13 +45,25 @@ namespace Duel.ScriptableObjects
         {
             get
             {
-                // Debug.Log(Instance.diceObjectPath);
                 if (_diceObject == null)
                 {
                     _diceObject = Load<DiceObject>($"{BasePath}/{Instance.diceObjectPath}");
                 }
 
                 return _diceObject;
+            }
+        }
+        
+        public static CharacterObject CharacterObject
+        {
+            get
+            {
+                if (_characterObject == null)
+                {
+                    _characterObject = Load<CharacterObject>($"{BasePath}/{Instance.characterObjectPath}");
+                }
+
+                return _characterObject;
             }
         }
 

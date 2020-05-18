@@ -1,29 +1,31 @@
 ﻿using Duel.Contexts;
+using Duel.Entities;
 using Duel.Interfaces;
+using Duel.Services;
 using UnityEngine;
 
 
 namespace Duel.Systems
 {
-    public class CharacterSystem : IStartSystem, IUpdateSystem
+    public class CharacterSystem : System, IAwakeSystem, IUpdateSystem
     {
-        private GameContext _context;
-        
-        public CharacterSystem(GameContext context)
+        // private readonly GameContext _context;
+        private Character _character;
+
+        public CharacterSystem(GameContext context, UsableServices services) : base(context, services)
         {
-            _context = context;
         }
-        
-        public void Start()
+
+        public void Awake()
         {
-            // Debug.Log("Start");
+            _character = new Character(_context.CharacterObject, _services);
         }
 
         public void Update()
         {
             if (_context.FaceValue.HasValue)
             {
-                // Debug.Log(_context.FaceValue.Value);
+                _character.Shoot();
                 _context.FaceValue = null;
             }
         }

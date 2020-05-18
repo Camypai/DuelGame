@@ -1,5 +1,6 @@
 ﻿using Duel.Contexts;
 using Duel.Helpers;
+using Duel.Services;
 
 
 namespace Duel.Systems
@@ -9,19 +10,21 @@ namespace Duel.Systems
         #region Private data
 
         private readonly SystemCollection _systemCollection = new SystemCollection();
+        
 
         #endregion
 
 
         #region ctor
 
-        public GameSystem(GameContext context)
+        public GameSystem(GameContext context, UsableServices services)
         {
-            _systemCollection.Add(new SetupSystem(context));
-            _systemCollection.Add(new WorldSystem(context));
-            _systemCollection.Add(new DiceSystem(context));
-            _systemCollection.Add(new CharacterSystem(context));
-            _systemCollection.Add(new InputSystem(context));
+            _systemCollection.Add(new SetupSystem(context, services));
+            _systemCollection.Add(new WorldSystem(context, services));
+            _systemCollection.Add(new DiceSystem(context, services));
+            _systemCollection.Add(new WeaponSystem(context, services));
+            _systemCollection.Add(new CharacterSystem(context, services));
+            _systemCollection.Add(new InputSystem(context, services));
         }
 
         #endregion

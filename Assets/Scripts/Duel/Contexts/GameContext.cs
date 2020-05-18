@@ -11,5 +11,8 @@ namespace Duel.Contexts
         public Transform HidePosition;
         public bool NeedThrow;
         public int? FaceValue;
+
+        public CharacterObject CharacterObject;
+        public WeaponObject WeaponObject;
     }
 }
