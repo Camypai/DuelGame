@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 5990127994731914806, guid: 06f719e3e03426a4cab4413222be2af2,
     type: 3}
-  weaponObject: {fileID: 11400000, guid: 60a3ccfe19805e64cbd573943c1a4fc9, type: 2}
+  stateObject: {fileID: 11400000, guid: e6803f99ffece764189a511549d0418e, type: 2}

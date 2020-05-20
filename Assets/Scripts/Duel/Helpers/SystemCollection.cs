@@ -11,6 +11,7 @@ namespace Duel.Helpers
         public readonly List<IUpdateSystem> UpdateSystems = new List<IUpdateSystem>();
         public readonly List<IFixedUpdateSystem> FixedUpdateSystems = new List<IFixedUpdateSystem>();
         public readonly List<ILateUpdateSystem> LateUpdateSystems = new List<ILateUpdateSystem>();
+        public readonly List<IConnectionSystem> ConnectionSystems = new List<IConnectionSystem>();
 
         public void Add(ISystem system)
         {
@@ -37,6 +38,11 @@ namespace Duel.Helpers
             if (system is ILateUpdateSystem lateUpdate)
             {
                 LateUpdateSystems.Add(lateUpdate);
+            }
+            
+            if (system is IConnectionSystem connectionSystem)
+            {
+                ConnectionSystems.Add(connectionSystem);
             }
         }
     }

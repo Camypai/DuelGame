@@ -7,6 +7,6 @@ namespace Duel.ScriptableObjects
     public class CharacterObject : ScriptableObject
     {
         public GameObject character;
-        public WeaponObject weaponObject;
+        public StateObject stateObject;
     }
 }

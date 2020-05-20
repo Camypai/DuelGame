@@ -9,8 +9,8 @@ namespace Duel.Systems
 {
     public class CharacterSystem : System, IAwakeSystem, IUpdateSystem
     {
-        // private readonly GameContext _context;
         private Character _character;
+        
 
         public CharacterSystem(GameContext context, UsableServices services) : base(context, services)
         {
@@ -23,11 +23,8 @@ namespace Duel.Systems
 
         public void Update()
         {
-            if (_context.FaceValue.HasValue)
-            {
-                _character.Shoot();
-                _context.FaceValue = null;
-            }
+            // Debug.Log(_context.FaceValue);
+            _character.Shoot(_context.FaceValue.HasValue);
         }
     }
 }

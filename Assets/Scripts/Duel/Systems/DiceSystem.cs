@@ -32,7 +32,7 @@ namespace Duel.Systems
 
             if (_isThrew)
             {
-                Debug.Log("Throwing");
+                // Debug.Log("Throwing");
                 var faceValue = _dice.Throw();
                 if(faceValue.HasValue)
                 {

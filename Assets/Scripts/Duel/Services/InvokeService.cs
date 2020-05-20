@@ -12,7 +12,7 @@ namespace Duel.Services
     {
         #region PrivateData
 
-        private GameContext _context;
+        private Context _context;
 
         private List<InvokeDelay> _invokeMethods = new List<InvokeDelay>();
         private List<InvokeTime> _invokeRepeatingMethods = new List<InvokeTime>();
@@ -26,7 +26,7 @@ namespace Duel.Services
 
         #region ClassLifeCycles
 
-        public InvokeService(GameContext context)
+        public InvokeService(Context context)
         {
             _context = context;
         }

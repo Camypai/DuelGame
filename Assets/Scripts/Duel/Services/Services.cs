@@ -23,7 +23,7 @@ namespace Duel.Services
         
         #region Methods
         
-        public void Initialize(GameContext context)
+        public void Initialize(Context context)
         {
 //            PhysicsService = new PhysicsService(context);
             // UnityTimeService = new UnityTimeService(context);

@@ -10,7 +10,6 @@ namespace Duel.Systems
         #region Private data
 
         private readonly SystemCollection _systemCollection = new SystemCollection();
-        
 
         #endregion
 
@@ -22,8 +21,8 @@ namespace Duel.Systems
             _systemCollection.Add(new SetupSystem(context, services));
             _systemCollection.Add(new WorldSystem(context, services));
             _systemCollection.Add(new DiceSystem(context, services));
-            _systemCollection.Add(new WeaponSystem(context, services));
             _systemCollection.Add(new CharacterSystem(context, services));
+            _systemCollection.Add(new WeaponSystem(context, services));
             _systemCollection.Add(new InputSystem(context, services));
         }
 

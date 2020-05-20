@@ -15,6 +15,7 @@ namespace Duel.Behaviour
         {
             var gameContext = new GameContext();
             _services = UsableServices.SharedInstance;
+            _services.Initialize(gameContext);
             
             _gameSystem = new GameSystem(gameContext, _services);
             

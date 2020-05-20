@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Duel.Contexts
 {
-    public class GameContext
+    public class GameContext : Context
     {
         public DiceObject DiceObject;
         public Transform ActivePosition;

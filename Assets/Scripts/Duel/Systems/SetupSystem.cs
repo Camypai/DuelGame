@@ -17,6 +17,7 @@ namespace Duel.Systems
         {
             _context.DiceObject = Data.DiceObject;
             _context.CharacterObject = Data.CharacterObject;
+            _context.WeaponObject = Data.WeaponObject;
         }
     }
 }
