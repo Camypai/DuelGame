@@ -9,15 +9,15 @@ namespace Duel.Systems
 {
     public class SetupSystem : System, IAwakeSystem
     {
-        public SetupSystem(GameContext context, UsableServices services) : base(context, services)
+        public SetupSystem(Context context, UsableServices services) : base(context, services)
         {
         }
         
         public void Awake()
         {
-            _context.DiceObject = Data.DiceObject;
-            _context.CharacterObject = Data.CharacterObject;
-            _context.WeaponObject = Data.WeaponObject;
+            _mainContext.DiceObject = Data.DiceObject;
+            _mainContext.CharacterObject = Data.CharacterObject;
+            _mainContext.WeaponObject = Data.WeaponObject;
         }
     }
 }

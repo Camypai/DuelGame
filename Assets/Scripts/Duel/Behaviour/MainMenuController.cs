@@ -1,4 +1,6 @@
-﻿using Duel.Contexts;
+﻿using System;
+using Duel.Contexts;
+using Duel.Enums;
 using Duel.Services;
 using Duel.Systems;
 using Photon.Pun;
@@ -11,25 +13,24 @@ namespace Duel.Behaviour
     public class MainMenuController : MonoBehaviourPunCallbacks
     {
         private MenuSystem _menuSystem;
+        private SetupSystem _setupSystem;
         private UsableServices _services;
+        private MenuContext _menuContext;
         
         [SerializeField]
         private Text log;
         
         private void Awake()
         {
-            var menuContext = new MenuContext();
+            _menuContext = MenuContext.GetMenuContext();
             _services = UsableServices.SharedInstance;
-            _services.Initialize(menuContext);
+            _services.Initialize(_menuContext);
             
-            _menuSystem = new MenuSystem(menuContext, _services, log);
+            _setupSystem = new SetupSystem(_menuContext, _services);
+            _menuSystem = new MenuSystem(_menuContext, _services, log);
             
+            _setupSystem.Awake();
             _menuSystem.Awake();
-        }
-
-        public void Play()
-        {
-            _menuSystem.Play();
         }
 
         public override void OnConnectedToMaster()
@@ -51,12 +52,28 @@ namespace Duel.Behaviour
         // {
         //     _menuSystem.Start();
         // }
-        //
-        // private void Update()
-        // {
-        //     _menuSystem.Update();
-        // }
-        //
+        
+        private void Update()
+        {
+            switch (_menuContext.UiButton)
+            {
+                case UiButton.None:
+                    break;
+                case UiButton.Play:
+                    _menuSystem.Play();
+                    break;
+                case UiButton.Exit:
+                    break;
+                case UiButton.Back:
+                    break;
+                case UiButton.Select:
+                    _menuSystem.Select();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        
         // private void FixedUpdate()
         // {
         //     _services.Update();

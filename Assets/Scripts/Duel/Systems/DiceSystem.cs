@@ -11,9 +11,11 @@ namespace Duel.Systems
     {
         private Dice _dice;
         private bool _isThrew = false;
+        private readonly GameContext _context;
         
-        public DiceSystem(GameContext context, UsableServices services) : base(context, services)
+        public DiceSystem(Context context, UsableServices services) : base(context, services)
         {
+            _context = _mainContext as GameContext;
         }
 
         public void Awake()

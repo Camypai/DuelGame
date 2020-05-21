@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: weapon
   m_EditorClassIdentifier: 
   weapon: {fileID: 5428461791709926870, guid: d2e9c78bd27d13949b2b73aaf9be7ca4, type: 3}
-  bulletStartPosition: {x: 0.1226495, y: 1.973899, z: -2.647685}
+  bulletStartPosition: {x: 0, y: 1.935474, z: -28.25811}
   damage: 20
   bullet: {fileID: 8842368680221884766, guid: 77ab47363279fec41a5338120e2da1d2, type: 3}
   bulletSpeed: 20000

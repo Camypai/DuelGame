@@ -8,8 +8,11 @@ namespace Duel.Systems
 {
     public class InputSystem : System, IUpdateSystem
     {
-        public InputSystem(GameContext context, UsableServices services) : base(context, services)
+        private readonly GameContext _context;
+        
+        public InputSystem(Context context, UsableServices services) : base(context, services)
         {
+            _context = _mainContext as GameContext;
         }
         
         public void Update()

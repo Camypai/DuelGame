@@ -10,10 +10,12 @@ namespace Duel.Systems
     public class CharacterSystem : System, IAwakeSystem, IUpdateSystem
     {
         private Character _character;
+        private readonly GameContext _context;
         
 
-        public CharacterSystem(GameContext context, UsableServices services) : base(context, services)
+        public CharacterSystem(Context context, UsableServices services) : base(context, services)
         {
+            _context = _mainContext as GameContext;
         }
 
         public void Awake()

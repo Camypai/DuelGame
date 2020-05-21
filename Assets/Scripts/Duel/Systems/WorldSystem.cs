@@ -8,8 +8,11 @@ namespace Duel.Systems
 {
     public class WorldSystem : System, IAwakeSystem
     {
-        public WorldSystem(GameContext context, UsableServices services) : base(context, services)
+        private readonly GameContext _context;
+        
+        public WorldSystem(Context context, UsableServices services) : base(context, services)
         {
+            _context = _mainContext as GameContext;
         }
 
         public void Awake()

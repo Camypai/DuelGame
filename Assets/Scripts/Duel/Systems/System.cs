@@ -7,12 +7,12 @@ namespace Duel.Systems
 {
     public abstract class System
     {
-        protected GameContext _context;
+        protected Context _mainContext;
         protected UsableServices _services;
 
-        public System(GameContext context, UsableServices services)
+        public System(Context context, UsableServices services)
         {
-            _context = context;
+            _mainContext = context;
             _services = services;
         }
 
