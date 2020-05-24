@@ -63,6 +63,7 @@ namespace Duel.Behaviour
                     _menuSystem.Play();
                     break;
                 case UiButton.Exit:
+                    Application.Quit();
                     break;
                 case UiButton.Back:
                     break;
@@ -72,6 +73,8 @@ namespace Duel.Behaviour
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            _menuContext.UiButton = UiButton.None;
         }
         
         // private void FixedUpdate()

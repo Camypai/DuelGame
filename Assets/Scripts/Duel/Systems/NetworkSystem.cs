@@ -1,11 +1,11 @@
-﻿using Duel.Contexts;
+﻿using Duel.Constants;
+using Duel.Contexts;
 using Duel.Interfaces;
 using Duel.Services;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
-using NotImplementedException = System.NotImplementedException;
 
 
 namespace Duel.Systems
@@ -39,13 +39,14 @@ namespace Duel.Systems
             Log($"Player's name is {PhotonNetwork.NickName}");
 
             PhotonNetwork.AutomaticallySyncScene = true;
-            PhotonNetwork.GameVersion = "0.0.1";
+            PhotonNetwork.GameVersion = Version.CurrentVersion;
             PhotonNetwork.ConnectUsingSettings();
         }
 
         public void Connect()
         {
             Log("Connected to master");
+            Log(PhotonNetwork.NickName);
         }
 
         public void Play()
@@ -56,6 +57,8 @@ namespace Duel.Systems
         public void JoinedRoom()
         {
             Log("Joined room");
+            
+            PhotonNetwork.LoadLevel(1);
         }
 
         public void OnJoinRandomFailed(short returnCode, string message)

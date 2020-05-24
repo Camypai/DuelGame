@@ -1,6 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Duel.Enums;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace Duel.Contexts
@@ -11,6 +13,7 @@ namespace Duel.Contexts
 
         public UiButton UiButton = UiButton.None;
         public GameObject SelectCharacter;
+        public Button SelectedButton;
 
         #endregion
         

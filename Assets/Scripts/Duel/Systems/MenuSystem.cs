@@ -89,13 +89,13 @@ namespace Duel.Systems
 
         public void Play()
         {
-            // _networkSystem.Play();
+            _networkSystem.Play();
         }
 
         public void Select()
         {
             _context.CharacterObject.character = _context.SelectCharacter;
-            _context.UiButton = UiButton.None;
+            
         }
 
         #endregion
