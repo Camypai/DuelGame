@@ -9,9 +9,11 @@ namespace Duel.Systems
     public class WeaponSystem : System, IAwakeSystem, IUpdateSystem
     {
         private Weapon _weapon;
+        private readonly GameContext _context;
         
-        public WeaponSystem(GameContext context, UsableServices services) : base(context, services)
+        public WeaponSystem(Context context, UsableServices services) : base(context, services)
         {
+            _context = _mainContext as GameContext;
         }
         
         public void Awake()

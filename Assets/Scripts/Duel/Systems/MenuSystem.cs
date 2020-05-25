@@ -1,5 +1,6 @@
 ﻿using System;
 using Duel.Contexts;
+using Duel.Enums;
 using Duel.Helpers;
 using Duel.Services;
 using UnityEngine;
@@ -15,6 +16,8 @@ namespace Duel.Systems
         // private readonly SystemCollection _systemCollection = new SystemCollection();
         private NetworkSystem _networkSystem;
 
+        private MenuContext _context;
+
         #endregion
 
 
@@ -22,6 +25,7 @@ namespace Duel.Systems
 
         public MenuSystem(MenuContext context, UsableServices services, Text log)
         {
+            _context = context;
             // _systemCollection.Add(new NetworkSystem(context, services, log));
             _networkSystem = new NetworkSystem(context, services, log);
         }
@@ -86,6 +90,12 @@ namespace Duel.Systems
         public void Play()
         {
             _networkSystem.Play();
+        }
+
+        public void Select()
+        {
+            _context.CharacterObject.character = _context.SelectCharacter;
+            
         }
 
         #endregion
