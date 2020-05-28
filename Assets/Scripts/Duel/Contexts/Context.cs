@@ -8,6 +8,7 @@ namespace Duel.Contexts
         public DiceObject DiceObject;
         public CharacterObject CharacterObject;
         public WeaponObject WeaponObject;
-        public SpawnPositionsObject SpawnPositionsObject;
+        public PositionsObject PositionsObject;
+        public WorldObject WorldObject;
     }
 }

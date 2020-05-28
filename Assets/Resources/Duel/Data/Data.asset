@@ -15,4 +15,5 @@ MonoBehaviour:
   diceObjectPath: player_dice
   characterObjectPath: player_character
   weaponObjectPath: weapon
-  spawnPositionsObjectPath: spawn_positions
+  positionsObjectPath: positions
+  worldObjectPath: world

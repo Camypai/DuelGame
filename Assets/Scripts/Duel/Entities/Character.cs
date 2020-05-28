@@ -23,11 +23,11 @@ namespace Duel.Entities
         private static readonly int HasHit = Animator.StringToHash("hasHit");
         private static readonly int BaseLayer = Animator.StringToHash("Base Layer");
         
-        public Character(CharacterObject characterObject, SpawnPositionsObject spawnPositionsObject, UsableServices services, List<GameObject> characters)
+        public Character(CharacterObject characterObject, PositionsObject spawnPositionsObject, UsableServices services, List<GameObject> characters)
         {
             var position = PhotonNetwork.IsMasterClient
-                ? spawnPositionsObject.masterPosition
-                : spawnPositionsObject.otherPosition;
+                ? spawnPositionsObject.spawnMasterPosition
+                : spawnPositionsObject.spawnOtherPosition;
             var rotate = PhotonNetwork.IsMasterClient ? Vector3.forward : Vector3.back;
             _character = PhotonNetwork.Instantiate($"{Constant.NetworkPrefabsPath}{characterObject.character.name}", position, Quaternion.LookRotation(rotate));
             _animator = _character.GetComponent<Animator>();

@@ -1,7 +1,10 @@
-﻿using Duel.Contexts;
+﻿using System;
+using Duel.Contexts;
 using Duel.Interfaces;
 using Duel.Services;
 using Photon.Pun;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 
 namespace Duel.Systems
@@ -30,8 +33,15 @@ namespace Duel.Systems
 
         public void Awake()
         {
-            // _context.ActivePosition = Object.Instantiate(_context.DiceObject.activePosition).transform;
-            // _context.HidePosition = Object.Instantiate(_context.DiceObject.hidePosition).transform;
+            var position = PhotonNetwork.IsMasterClient
+                ? _context.PositionsObject.cameraMasterPosition
+                : _context.PositionsObject.cameraOtherPosition;
+
+            var rotate = PhotonNetwork.IsMasterClient
+                ? _context.PositionsObject.cameraMasterRotate
+                : _context.PositionsObject.cameraOtherRotate;
+            var worldCamera = Object.Instantiate(_context.WorldObject.Camera, position,
+                Quaternion.Euler(rotate));
         }
 
         #endregion

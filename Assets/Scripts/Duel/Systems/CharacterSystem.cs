@@ -34,7 +34,7 @@ namespace Duel.Systems
 
         public void Awake()
         {
-            _character = new Character(_context.CharacterObject, _context.SpawnPositionsObject, _services, _context.Characters);
+            _character = new Character(_context.CharacterObject, _context.PositionsObject, _services, _context.Characters);
             _photonView = _character.GetGameObject().GetPhotonView();
         }
 

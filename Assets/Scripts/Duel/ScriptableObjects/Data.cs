@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Duel.Constants;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,7 +11,7 @@ namespace Duel.ScriptableObjects
     {
         #region PrivateData
 
-        private const string BasePath = "Duel/Data";
+        private const string BasePath = Constant.ScriptableObjectPath;
 
         #endregion
         
@@ -20,12 +21,14 @@ namespace Duel.ScriptableObjects
         [SerializeField] private string diceObjectPath;
         [SerializeField] private string characterObjectPath;
         [SerializeField] private string weaponObjectPath;
-        [SerializeField] private string spawnPositionsObjectPath;
+        [SerializeField] private string positionsObjectPath;
+        [SerializeField] private string worldObjectPath;
         private static Data _instance;
         private static DiceObject _diceObject;
         private static CharacterObject _characterObject;
         private static WeaponObject _weaponObject;
-        private static SpawnPositionsObject _spawnPositionsObject;
+        private static PositionsObject _positionsObject;
+        private static WorldObject _worldObject;
 
         #endregion
         
@@ -38,7 +41,7 @@ namespace Duel.ScriptableObjects
             {
                 if (_instance == null)
                 {
-                    _instance = Resources.Load<Data>($"{BasePath}/{nameof(Data)}");
+                    _instance = Resources.Load<Data>($"{BasePath}{nameof(Data)}");
                 }
 
                 return _instance;
@@ -51,7 +54,7 @@ namespace Duel.ScriptableObjects
             {
                 if (_diceObject == null)
                 {
-                    _diceObject = Load<DiceObject>($"{BasePath}/{Instance.diceObjectPath}");
+                    _diceObject = Load<DiceObject>($"{BasePath}{Instance.diceObjectPath}");
                 }
 
                 return _diceObject;
@@ -64,7 +67,7 @@ namespace Duel.ScriptableObjects
             {
                 if (_characterObject == null)
                 {
-                    _characterObject = Load<CharacterObject>($"{BasePath}/{Instance.characterObjectPath}");
+                    _characterObject = Load<CharacterObject>($"{BasePath}{Instance.characterObjectPath}");
                 }
 
                 return _characterObject;
@@ -77,23 +80,36 @@ namespace Duel.ScriptableObjects
             {
                 if (_weaponObject == null)
                 {
-                    _weaponObject = Load<WeaponObject>($"{BasePath}/{Instance.weaponObjectPath}");
+                    _weaponObject = Load<WeaponObject>($"{BasePath}{Instance.weaponObjectPath}");
                 }
 
                 return _weaponObject;
             }
         }
         
-        public static SpawnPositionsObject SpawnPositionsObject 
+        public static PositionsObject PositionsObject 
         {
             get
             {
-                if (_spawnPositionsObject == null)
+                if (_positionsObject == null)
                 {
-                    _spawnPositionsObject = Load<SpawnPositionsObject>($"{BasePath}/{Instance.spawnPositionsObjectPath}");
+                    _positionsObject = Load<PositionsObject>($"{BasePath}{Instance.positionsObjectPath}");
                 }
 
-                return _spawnPositionsObject;
+                return _positionsObject;
+            }
+        }
+        
+        public static WorldObject WorldObject 
+        {
+            get
+            {
+                if (_worldObject == null)
+                {
+                    _worldObject = Load<WorldObject>($"{BasePath}{Instance.worldObjectPath}");
+                }
+
+                return _worldObject;
             }
         }
 
