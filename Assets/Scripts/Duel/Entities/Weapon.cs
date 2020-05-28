@@ -2,6 +2,7 @@
 using Duel.Helpers;
 using Duel.Models;
 using Duel.ScriptableObjects;
+using Photon.Pun;
 using UnityEngine;
 
 
@@ -16,7 +17,7 @@ namespace Duel.Entities
         
         public Weapon(WeaponObject weaponObject)
         {
-            _bulletPosition = weaponObject.bulletStartPosition;
+            _bulletPosition = PhotonNetwork.IsMasterClient ? weaponObject.bulletStartPositionForMasterClient : weaponObject.bulletStartPositionForOtherClient;
             _bullet = new Bullet(weaponObject.bullet, _bulletPosition, weaponObject.bulletSpeed);
             _damage = weaponObject.damage;
             _statuses = new Status[weaponObject.statusObjects.Length];

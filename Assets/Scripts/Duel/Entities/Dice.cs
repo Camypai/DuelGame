@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Duel.Constants;
 using Duel.ScriptableObjects;
+using Photon.Pun;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -17,9 +19,9 @@ namespace Duel.Entities
         private readonly Rigidbody _rigidbody;
         private readonly List<Models.Face> _faces = new List<Models.Face>();
 
-        private readonly float _strange;
-        private readonly Transform _activePosition;
-        private readonly Transform _hidePosition;
+        private readonly float _strength;
+        private readonly Vector3 _activePosition;
+        private readonly Vector3 _hidePosition;
 
         private bool _isThrew = false;
 
@@ -28,18 +30,18 @@ namespace Duel.Entities
 
         #region ctor
 
-        public Dice(DiceObject diceObject, Transform activePosition, Transform hidePosition)
+        public Dice(DiceObject diceObject)
         {
-            _dice = Object.Instantiate(diceObject.dice);
-            // BackToTheHidePosition();
+            _dice = PhotonNetwork.Instantiate($"{Constant.NetworkPrefabsPath}{diceObject.dice.name}", diceObject.activePosition, Quaternion.identity);
+            BackToTheHidePosition();
 
             _faces.AddRange(_dice.GetComponentsInChildren<Models.Face>());
 
 
-            _activePosition = activePosition;
-            _hidePosition = hidePosition;
+            _activePosition = diceObject.activePosition;
+            _hidePosition = diceObject.hidePosition;
 
-            _strange = diceObject.strange;
+            _strength = diceObject.strength;
 
             _rigidbody = _dice.GetComponent<Rigidbody>();
         }
@@ -58,8 +60,8 @@ namespace Duel.Entities
                 _isThrew = true;
                 GoToTheActivePosition();
 
-                _rigidbody.AddForce(Vector3.forward * _strange);
-                _rigidbody.AddTorque(Vector3.one * _strange);
+                _rigidbody.AddForce(Vector3.forward * _strength);
+                _rigidbody.AddTorque(Vector3.one * _strength);
             }
             else if (_isThrew && Math.Abs(_rigidbody.velocity.sqrMagnitude) < 0.01f && Math.Abs(_rigidbody.angularVelocity.sqrMagnitude) < 0.01f)
             {
@@ -73,9 +75,14 @@ namespace Duel.Entities
 
         public void BackToTheHidePosition()
         {
+            _dice.transform.position = _hidePosition;
+            // _rigidbody.isKinematic = true;
             _dice.SetActive(false);
-            _dice.transform.position = _hidePosition.position;
-            _rigidbody.isKinematic = true;
+        }
+
+        public GameObject GetGameObject()
+        {
+            return _dice;
         }
 
         #endregion
@@ -85,7 +92,7 @@ namespace Duel.Entities
 
         private void GoToTheActivePosition()
         {
-            var position = _activePosition.position;
+            var position = _activePosition;
             _dice.transform.rotation = Random.rotation;
             _rigidbody.isKinematic = false;
             _dice.transform.position = position;

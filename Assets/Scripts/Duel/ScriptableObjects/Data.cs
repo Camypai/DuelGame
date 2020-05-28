@@ -20,10 +20,12 @@ namespace Duel.ScriptableObjects
         [SerializeField] private string diceObjectPath;
         [SerializeField] private string characterObjectPath;
         [SerializeField] private string weaponObjectPath;
+        [SerializeField] private string spawnPositionsObjectPath;
         private static Data _instance;
         private static DiceObject _diceObject;
         private static CharacterObject _characterObject;
         private static WeaponObject _weaponObject;
+        private static SpawnPositionsObject _spawnPositionsObject;
 
         #endregion
         
@@ -79,6 +81,19 @@ namespace Duel.ScriptableObjects
                 }
 
                 return _weaponObject;
+            }
+        }
+        
+        public static SpawnPositionsObject SpawnPositionsObject 
+        {
+            get
+            {
+                if (_spawnPositionsObject == null)
+                {
+                    _spawnPositionsObject = Load<SpawnPositionsObject>($"{BasePath}/{Instance.spawnPositionsObjectPath}");
+                }
+
+                return _spawnPositionsObject;
             }
         }
 

@@ -2,26 +2,60 @@
 using Duel.Entities;
 using Duel.Interfaces;
 using Duel.Services;
+using Photon.Pun;
 using UnityEngine;
 
 
 namespace Duel.Systems
 {
-    public class DiceSystem : System, IAwakeSystem, IUpdateSystem
+    public class DiceSystem : System, IAwakeSystem, IStartSystem, IUpdateSystem
     {
+        #region Private data
+
         private Dice _dice;
         private bool _isThrew = false;
         private readonly GameContext _context;
-        
+        private PhotonView _photonView;
+
+        #endregion
+
+
+        #region ctor
+
         public DiceSystem(Context context, UsableServices services) : base(context, services)
         {
             _context = _mainContext as GameContext;
         }
 
+        #endregion
+
+
+        #region IAwakeSystem
+
         public void Awake()
         {
-            _dice = new Dice(_context.DiceObject, _context.ActivePosition, _context.HidePosition);
+            _dice = new Dice(_context.DiceObject);
+            _photonView = _dice.GetGameObject().GetPhotonView();
         }
+
+        #endregion
+
+
+        #region IStartSystem
+
+        public void Start()
+        {
+            if (!_photonView.IsMine)
+            {
+                var dice = _dice.GetGameObject();
+                dice.GetComponentInChildren<MeshRenderer>().materials[0] = _context.DiceObject.otherDice;
+            }
+        }
+
+        #endregion
+
+
+        #region IUpdateSystem
 
         public void Update()
         {
@@ -44,5 +78,7 @@ namespace Duel.Systems
                 }
             }
         }
+
+        #endregion
     }
 }

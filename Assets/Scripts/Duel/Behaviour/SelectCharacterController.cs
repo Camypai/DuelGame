@@ -21,6 +21,9 @@ namespace Duel.Behaviour
         private PhotonView _photonView;
         private List<Button> _buttons;
         private CharacterType _characterType = CharacterType.None;
+        private bool _playerSelected;
+        private bool _otherSelected;
+        private bool _isLoaded = false;
 
         private void Awake()
         {
@@ -32,6 +35,12 @@ namespace Duel.Behaviour
 
         private void Update()
         {
+            if (!_isLoaded && PhotonNetwork.IsMasterClient && _playerSelected && _otherSelected)
+            {
+                PhotonNetwork.LoadLevel(3);
+                _isLoaded = true;
+            }
+            
             switch (_menuContext.UiButton)
             {
                 case UiButton.None:
@@ -41,11 +50,15 @@ namespace Duel.Behaviour
                 case UiButton.Exit:
                     break;
                 case UiButton.Back:
+                    PhotonNetwork.LoadLevel(0);
+                    PhotonNetwork.LeaveRoom();
                     break;
                 case UiButton.Select:
                     _photonView.RequestOwnership();
-                    _characterType = _menuContext.SelectedButton.gameObject.GetComponent<CharacterSelect>()
-                        .CharacterType;
+                    var character = _menuContext.SelectedButton.gameObject.GetComponent<CharacterSelect>();
+                    _characterType = character.CharacterType;
+                    _menuContext.CharacterObject.character = _menuContext.SelectCharacter;
+                    _playerSelected = true;
                     break;
                 default:
                     break;
@@ -78,6 +91,8 @@ namespace Duel.Behaviour
                         button.interactable = true;
                     }
                 }
+
+                _otherSelected = true;
             }
         }
 

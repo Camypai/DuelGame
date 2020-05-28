@@ -1,4 +1,6 @@
-﻿using Duel.ScriptableObjects;
+﻿using System.Collections.Generic;
+using Duel.Entities;
+using Duel.ScriptableObjects;
 using UnityEngine;
 
 
@@ -7,10 +9,10 @@ namespace Duel.Contexts
     public class GameContext : Context
     {
         // public DiceObject DiceObject;
-        public Transform ActivePosition;
-        public Transform HidePosition;
         public bool NeedThrow;
         public int? FaceValue;
+        public List<GameObject> Characters = new List<GameObject>();
+        public List<GameObject> Dices = new List<GameObject>();
 
         // public CharacterObject CharacterObject;
         // public WeaponObject WeaponObject;

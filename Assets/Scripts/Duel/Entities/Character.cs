@@ -1,5 +1,8 @@
-﻿using Duel.ScriptableObjects;
+﻿using System.Collections.Generic;
+using Duel.Constants;
+using Duel.ScriptableObjects;
 using Duel.Services;
+using Photon.Pun;
 using UnityEngine;
 
 
@@ -7,8 +10,10 @@ namespace Duel.Entities
 {
     public class Character
     {
+        private GameObject _character;
         private UsableServices _services;
         private State _state;
+        private PhotonView _photonView;
         
         private readonly Animator _animator;
 
@@ -18,10 +23,17 @@ namespace Duel.Entities
         private static readonly int HasHit = Animator.StringToHash("hasHit");
         private static readonly int BaseLayer = Animator.StringToHash("Base Layer");
         
-        public Character(CharacterObject characterObject, UsableServices services)
+        public Character(CharacterObject characterObject, SpawnPositionsObject spawnPositionsObject, UsableServices services, List<GameObject> characters)
         {
-            var character = Object.Instantiate(characterObject.character);
-            _animator = character.GetComponent<Animator>();
+            var position = PhotonNetwork.IsMasterClient
+                ? spawnPositionsObject.masterPosition
+                : spawnPositionsObject.otherPosition;
+            var rotate = PhotonNetwork.IsMasterClient ? Vector3.forward : Vector3.back;
+            _character = PhotonNetwork.Instantiate($"{Constant.NetworkPrefabsPath}{characterObject.character.name}", position, Quaternion.LookRotation(rotate));
+            _animator = _character.GetComponent<Animator>();
+            _photonView = _character.GetPhotonView();
+            
+            characters.Add(_character);
 
             _services = services;
             _state = new State(characterObject.stateObject);
@@ -29,6 +41,11 @@ namespace Duel.Entities
 
         public void Shoot(bool value)
         {
+            if(!_photonView.IsMine)
+            {
+                return;
+            }
+            
             var current = _animator.GetBool(IsShoot);
 
             if(!current.Equals(value))
@@ -39,20 +56,37 @@ namespace Duel.Entities
 
         public void Victory()
         {
+            if(!_photonView.IsMine)
+            {
+                return;
+            }
             _animator.SetTrigger(IsWin);
         }
 
         public void HasDamage()
         {
+            if(!_photonView.IsMine)
+            {
+                return;
+            }
             _animator.SetTrigger(HasHit);
         }
 
         public void Defeat()
         {
+            if(!_photonView.IsMine)
+            {
+                return;
+            }
             if(_state.IsDead)
             {
                 _animator.SetTrigger(IsDefeat);
             }
+        }
+
+        public GameObject GetGameObject()
+        {
+            return _character;
         }
     }
 }

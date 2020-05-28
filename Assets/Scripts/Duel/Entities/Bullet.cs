@@ -1,4 +1,5 @@
 ﻿using Duel.Models;
+using Photon.Pun;
 using UnityEngine;
 
 
@@ -16,7 +17,8 @@ namespace Duel.Entities
         {
             _startPosition = startPosition;
             _speed = speed;
-            _bullet = Object.Instantiate(bulletObject, _startPosition, Quaternion.identity);
+            var rotate = PhotonNetwork.IsMasterClient ? Vector3.forward : Vector3.back;
+            _bullet = Object.Instantiate(bulletObject, _startPosition, Quaternion.LookRotation(rotate));
 
             _rigidbody = _bullet.GetComponent<Rigidbody>();
             _trailRenderer = _bullet.GetComponent<TrailRenderer>();

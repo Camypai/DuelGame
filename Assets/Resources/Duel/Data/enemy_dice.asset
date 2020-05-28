@@ -10,16 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0486e725ef2e49bf8b10a0b2dd89036b, type: 3}
-  m_Name: dice_object
+  m_Name: enemy_dice
   m_EditorClassIdentifier: 
   dice: {fileID: 4435042132855115557, guid: 49bd11a3ea80abe41ab3b1fb8dd67b8b, type: 3}
   strange: 100
-  firstFace: {fileID: 0}
-  secondFace: {fileID: 0}
-  thirdFace: {fileID: 0}
-  fourthFace: {fileID: 0}
-  fifthFace: {fileID: 0}
-  sixthFace: {fileID: 0}
   activePosition: {fileID: 3302966082816260431, guid: 1b2c096f37a60dc4d9e0d09b8dd4cd83,
     type: 3}
   hidePosition: {fileID: 3957988554716405707, guid: 149ca1ee4f87ed44087614b1c61bd9dd,

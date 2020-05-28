@@ -7,8 +7,15 @@ namespace Duel.Systems
 {
     public abstract class System
     {
+        #region Protected data
+
         protected Context _mainContext;
         protected UsableServices _services;
+
+        #endregion
+
+
+        #region ctor
 
         public System(Context context, UsableServices services)
         {
@@ -20,5 +27,7 @@ namespace Duel.Systems
         {
             
         }
+
+        #endregion
     }
 }

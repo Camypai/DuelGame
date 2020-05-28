@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Duel.Enums;
+using UnityEngine;
 
 
 namespace Duel.ScriptableObjects
@@ -8,5 +9,6 @@ namespace Duel.ScriptableObjects
     {
         public GameObject character;
         public StateObject stateObject;
+        public CharacterType characterType;
     }
 }
