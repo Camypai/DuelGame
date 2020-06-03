@@ -21,12 +21,14 @@ namespace Duel.ScriptableObjects
         [SerializeField] private string diceObjectPath;
         [SerializeField] private string characterObjectPath;
         [SerializeField] private string weaponObjectPath;
+        [SerializeField] private string statusesObjectPath;
         [SerializeField] private string positionsObjectPath;
         [SerializeField] private string worldObjectPath;
         private static Data _instance;
         private static DiceObject _diceObject;
         private static CharacterObject _characterObject;
         private static WeaponObject _weaponObject;
+        private static StatusesObject _statusesObject;
         private static PositionsObject _positionsObject;
         private static WorldObject _worldObject;
 
@@ -84,6 +86,19 @@ namespace Duel.ScriptableObjects
                 }
 
                 return _weaponObject;
+            }
+        }
+        
+        public static StatusesObject StatusesObject
+        {
+            get
+            {
+                if (_statusesObject == null)
+                {
+                    _statusesObject = Load<StatusesObject>($"{BasePath}{Instance.statusesObjectPath}");
+                }
+
+                return _statusesObject;
             }
         }
         

@@ -15,5 +15,6 @@ MonoBehaviour:
   diceObjectPath: player_dice
   characterObjectPath: player_character
   weaponObjectPath: weapon
+  statusesObjectPath: statuses
   positionsObjectPath: positions
   worldObjectPath: world

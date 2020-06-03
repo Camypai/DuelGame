@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Duel.Contexts;
 using Duel.Helpers;
 using Duel.Interfaces;
+using Photon.Pun;
 using UnityEngine;
 
 
@@ -78,7 +79,7 @@ namespace Duel.Services
 
             foreach (var invokeTime in _idInvokeRepeatingMethodsForRemove)
             {
-                invokeTime.Callback();
+                invokeTime.Callback?.Invoke();
                 _invokeRepeatingMethods.Remove(invokeTime);
             }
 
@@ -109,9 +110,9 @@ namespace Duel.Services
         /// <param name="time">Время выполнения метода</param>
         public void InvokeRepeating(Action method, float time, float interval, Action callback = null)
         {
-            var invokeTime = new InvokeTime(method, Time.time, time, interval, callback);
+            var invokeTime = new InvokeTime(method, PhotonNetwork.Time, time, interval, callback);
             invokeTime.Interval += _bias; // прибавляем погрешность чтобы не халтурить
-            invokeTime.Timer = Time.time; // чтобы тайм вычитался на тайм в первый тик и сработал моментально
+            invokeTime.Timer = PhotonNetwork.Time; // чтобы тайм вычитался на тайм в первый тик и сработал моментально
 
             _invokeRepeatingMethods.Add(invokeTime);
         }

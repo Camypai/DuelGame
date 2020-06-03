@@ -1,5 +1,6 @@
 ﻿using System;
 using Duel.Contexts;
+using Duel.Helpers;
 using Duel.Interfaces;
 using Duel.Services;
 using Photon.Pun;
@@ -42,6 +43,11 @@ namespace Duel.Systems
                 : _context.PositionsObject.cameraOtherRotate;
             var worldCamera = Object.Instantiate(_context.WorldObject.Camera, position,
                 Quaternion.Euler(rotate));
+
+            foreach (var statusObject in _context.StatusesObject.Statuses)
+            {
+                _context.Statuses.Add(Invoker.CreateStatus(statusObject));
+            }
         }
 
         #endregion

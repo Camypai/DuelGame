@@ -25,6 +25,7 @@ namespace Duel.Systems
             _mainContext.DiceObject = Data.DiceObject;
             _mainContext.CharacterObject = Data.CharacterObject;
             _mainContext.WeaponObject = Data.WeaponObject;
+            _mainContext.StatusesObject = Data.StatusesObject;
             _mainContext.PositionsObject = Data.PositionsObject;
             _mainContext.WorldObject = Data.WorldObject;
         }

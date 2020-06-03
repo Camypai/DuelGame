@@ -1,4 +1,5 @@
 ﻿using Duel.ScriptableObjects;
+using UnityEngine;
 
 
 namespace Duel.Entities.Statuses
@@ -16,6 +17,7 @@ namespace Duel.Entities.Statuses
 
         private void Damage()
         {
+            Debug.Log(State.HealthPoints);
             State.HealthPoints -= _damage;
             if (State.HealthPoints <= 0)
             {

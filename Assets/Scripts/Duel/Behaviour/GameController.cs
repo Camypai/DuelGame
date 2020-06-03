@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Duel.Contexts;
 using Duel.Entities.Statuses;
 using Duel.Enums;
+using Duel.Helpers;
 using Duel.Services;
 using Duel.Systems;
 using ExitGames.Client.Photon;
@@ -65,7 +67,6 @@ namespace Duel.Behaviour
 
         public void OnEvent(EventData photonEvent)
         {
-            Debug.Log($"EVENT: {photonEvent}");
             switch (photonEvent.Code)
             {
                 case 1:
@@ -74,11 +75,15 @@ namespace Duel.Behaviour
                         case StatusType.None:
                             break;
                         case StatusType.Damage:
-                            Debug.Log("Damage!!!");
+                            var statuses = _context.Statuses.Where(q => q.StatusType == StatusType.Damage);
+                            _context.GetStatuses.AddRange(statuses);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
+                    break;
+                case 2:
+                    _context.GameEnd = true;
                     break;
             }
         }

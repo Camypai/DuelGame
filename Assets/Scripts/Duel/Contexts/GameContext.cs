@@ -12,10 +12,13 @@ namespace Duel.Contexts
         // public DiceObject DiceObject;
         public bool NeedThrow;
         public int? FaceValue;
+        public State State;
+        public List<Status> Statuses = new List<Status>();
         public List<GameObject> Characters = new List<GameObject>();
-        public List<GameObject> Dices = new List<GameObject>();
-        public Status TakeStatus;
+        // public List<GameObject> Dices = new List<GameObject>();
         public List<Status> GetStatuses = new List<Status>();
+        public bool TakeStatus = false;
+        public bool GameEnd = false;
 
         // public CharacterObject CharacterObject;
         // public WeaponObject WeaponObject;

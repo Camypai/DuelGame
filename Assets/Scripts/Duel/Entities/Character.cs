@@ -70,6 +70,7 @@ namespace Duel.Entities
                 return;
             }
             _animator.SetTrigger(HasHit);
+            // _animator.ResetTrigger(HasHit);
         }
 
         public void Defeat()
@@ -87,6 +88,11 @@ namespace Duel.Entities
         public GameObject GetGameObject()
         {
             return _character;
+        }
+
+        public State GetState()
+        {
+            return _state;
         }
     }
 }

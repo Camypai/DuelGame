@@ -7,9 +7,9 @@ namespace Duel.Helpers
     {
         #region Fields
 
-        public float StartTime;
+        public double StartTime;
         public float Interval;
-        public float Timer;
+        public double Timer;
         public float Time;
         public Action Callback;
 
@@ -18,7 +18,7 @@ namespace Duel.Helpers
 
         #region ClassLifeCycles
 
-        public InvokeTime(Action method, float startTime, float time, float interval, Action callback = null) : base(method)
+        public InvokeTime(Action method, double startTime, float time, float interval, Action callback = null) : base(method)
         {
             StartTime = startTime;
             Interval = interval;

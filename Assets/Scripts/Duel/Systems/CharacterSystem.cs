@@ -2,9 +2,10 @@
 using Duel.Entities;
 using Duel.Interfaces;
 using Duel.Services;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 
 namespace Duel.Systems
@@ -36,6 +37,7 @@ namespace Duel.Systems
         {
             _character = new Character(_context.CharacterObject, _context.PositionsObject, _services, _context.Characters);
             _photonView = _character.GetGameObject().GetPhotonView();
+            _context.State = _character.GetState();
         }
 
         #endregion
@@ -61,6 +63,24 @@ namespace Duel.Systems
         {
             // Debug.Log(_context.Characters.Count);
             _character.Shoot(_context.FaceValue.HasValue);
+
+            if (_context.TakeStatus)
+            {
+                _context.TakeStatus = false;
+                _character.HasDamage();
+            }
+
+            if (_context.State.IsDead)
+            {
+                PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions {Receivers = ReceiverGroup.Others},
+                    SendOptions.SendReliable);
+                _character.Defeat();
+            }
+
+            if (_context.GameEnd && !_context.State.IsDead)
+            {
+                _character.Victory();
+            }
         }
         
 
