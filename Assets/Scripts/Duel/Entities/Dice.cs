@@ -63,7 +63,10 @@ namespace Duel.Entities
                 _rigidbody.AddForce(Vector3.forward * _strength);
                 _rigidbody.AddTorque(Vector3.one * _strength);
             }
-            else if (_isThrew && Math.Abs(_rigidbody.velocity.sqrMagnitude) < 0.01f && Math.Abs(_rigidbody.angularVelocity.sqrMagnitude) < 0.01f)
+            else if (_isThrew && 
+                     Math.Abs(_rigidbody.velocity.sqrMagnitude) < 0.01f && 
+                     Math.Abs(_rigidbody.angularVelocity.sqrMagnitude) < 0.01f &&
+                     Math.Abs(_dice.transform.position.y) < 1f)
             {
                 _isThrew = false;
 

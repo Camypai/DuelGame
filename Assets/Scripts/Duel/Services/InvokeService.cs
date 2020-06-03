@@ -98,7 +98,7 @@ namespace Duel.Services
         /// <param name="delayTime">Заданное количество времени в секундах</param>
         public void Invoke(Action method, float delayTime)
         {
-            var time = Time.time + delayTime + _bias; // конвертируем обычную задержку в нужную с помощью тайм тайм и погрешностью
+            var time = Time.time + delayTime + _bias; // конвертируем обычную задержку в нужную с помощью тайм и погрешностью
             _invokeMethods.Add(new InvokeDelay(method, time));
         }
 

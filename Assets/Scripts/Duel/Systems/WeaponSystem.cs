@@ -30,7 +30,7 @@ namespace Duel.Systems
 
         public void Awake()
         {
-            _weapon = new Weapon(_context.WeaponObject);
+            _weapon = new Weapon(_context.WeaponObject, _services);
         }
 
         #endregion

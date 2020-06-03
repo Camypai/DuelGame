@@ -1,4 +1,5 @@
 ﻿using Duel.Models;
+using Duel.Services;
 using Photon.Pun;
 using UnityEngine;
 
@@ -13,30 +14,35 @@ namespace Duel.Entities
         private readonly Rigidbody _rigidbody;
         private readonly TrailRenderer _trailRenderer;
         private float _direction;
+        private UsableServices _services;
 
-        public Bullet(GameObject bulletObject, Vector3 startPosition, float speed)
+        public Bullet(GameObject bulletObject, Vector3 startPosition, float speed, UsableServices services)
         {
             _startPosition = startPosition;
             _speed = speed;
-            _direction = PhotonNetwork.IsMasterClient ? 0f : -180f;
-            _bullet = Object.Instantiate(bulletObject, _startPosition, Quaternion.Euler(new Vector3(0f, _direction, 0f)));
+            _services = services;
+            var direction = PhotonNetwork.IsMasterClient ? 0f : -180f;
+            _direction = PhotonNetwork.IsMasterClient ? 1f : -1f;
+            _bullet = Object.Instantiate(bulletObject, _startPosition, Quaternion.Euler(new Vector3(0f, direction, 0f)));
 
             _rigidbody = _bullet.GetComponent<Rigidbody>();
             _trailRenderer = _bullet.GetComponent<TrailRenderer>();
         }
 
 
-        public void Fire(float damage, int? faceValue)
+        public void Fire()
         {
-            Debug.Log("Fire");
             MoveToStartPosition();
-            var direction = PhotonNetwork.IsMasterClient ? Vector3.forward : Vector3.back;
-            _rigidbody.AddForce(direction * _speed);
+            var direction = new Vector3(0f,0f, _direction);
+            Debug.Log(direction);
+            _rigidbody.AddForce(direction * _speed, ForceMode.Acceleration);
+            _services.InvokeService.Invoke(MoveToStartPosition, 2f);
         }
 
         private void MoveToStartPosition()
         {
             _rigidbody.ResetInertiaTensor();
+            _rigidbody.velocity = Vector3.zero;
             _bullet.transform.position = _startPosition;
             _trailRenderer.Clear();
         }
@@ -44,7 +50,10 @@ namespace Duel.Entities
         public void Lose()
         {
             MoveToStartPosition();
-            _rigidbody.AddForce(new Vector3(0.6f, 0f,0f) * _speed);
+            var direction = new Vector3(0.6f,0, _direction);
+            Debug.Log(direction);
+            _rigidbody.AddForce(direction * _speed, ForceMode.Acceleration);
+            _services.InvokeService.Invoke(MoveToStartPosition, 2f);
         }
     }
 }
