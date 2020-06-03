@@ -1,6 +1,9 @@
-﻿using Duel.Models;
+﻿using Duel.Enums;
+using Duel.Models;
 using Duel.Services;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 
@@ -13,8 +16,8 @@ namespace Duel.Entities
         private readonly float _speed;
         private readonly Rigidbody _rigidbody;
         private readonly TrailRenderer _trailRenderer;
-        private float _direction;
-        private UsableServices _services;
+        private readonly float _direction;
+        private readonly UsableServices _services;
 
         public Bullet(GameObject bulletObject, Vector3 startPosition, float speed, UsableServices services)
         {
@@ -36,6 +39,8 @@ namespace Duel.Entities
             var direction = new Vector3(0f,0f, _direction);
             Debug.Log(direction);
             _rigidbody.AddForce(direction * _speed, ForceMode.Acceleration);
+            PhotonNetwork.RaiseEvent(1, StatusType.Damage, new RaiseEventOptions {Receivers = ReceiverGroup.Others},
+                SendOptions.SendReliable);
             _services.InvokeService.Invoke(MoveToStartPosition, 2f);
         }
 
