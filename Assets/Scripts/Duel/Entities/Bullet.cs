@@ -5,6 +5,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using EventType = Duel.Enums.EventType;
 
 
 namespace Duel.Entities
@@ -39,7 +40,7 @@ namespace Duel.Entities
             var direction = new Vector3(0f,0f, _direction);
             Debug.Log(direction);
             _rigidbody.AddForce(direction * _speed, ForceMode.Acceleration);
-            PhotonNetwork.RaiseEvent(1, StatusType.Damage, new RaiseEventOptions {Receivers = ReceiverGroup.Others},
+            PhotonNetwork.RaiseEvent((byte)EventType.Status, StatusType.Damage, new RaiseEventOptions {Receivers = ReceiverGroup.Others},
                 SendOptions.SendReliable);
             _services.InvokeService.Invoke(MoveToStartPosition, 2f);
         }

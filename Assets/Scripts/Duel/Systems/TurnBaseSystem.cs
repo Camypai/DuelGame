@@ -5,7 +5,7 @@ using Duel.Services;
 
 namespace Duel.Systems
 {
-    public class TurnSystem : System, IFixedUpdateSystem
+    public class TurnBaseSystem : System, IFixedUpdateSystem
     {
         #region Private data
 
@@ -16,7 +16,7 @@ namespace Duel.Systems
 
         #region ctor
 
-        public TurnSystem(Context context, UsableServices services) : base(context, services)
+        public TurnBaseSystem(Context context, UsableServices services) : base(context, services)
         {
             _context = _mainContext as GameContext;
         }

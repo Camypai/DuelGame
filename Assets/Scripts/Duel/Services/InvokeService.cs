@@ -79,6 +79,7 @@ namespace Duel.Services
 
             foreach (var invokeTime in _idInvokeRepeatingMethodsForRemove)
             {
+                Debug.Log(_idInvokeRepeatingMethodsForRemove.Count);
                 invokeTime.Callback?.Invoke();
                 _invokeRepeatingMethods.Remove(invokeTime);
             }
