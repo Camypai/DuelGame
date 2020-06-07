@@ -40,11 +40,12 @@ namespace Duel.Systems
 
         public void Update()
         {
-            if (_context.FaceValue.HasValue)
-            {
-                _weapon.Shoot(_context.FaceValue);
-                _context.FaceValue = null;
-            }
+            // TODO: Нужно переписать под использование способностей
+            // if (_context.FaceValue.HasValue)
+            // {
+            //     _weapon.Shoot(_context.FaceValue);
+            //     _context.FaceValue = null;
+            // }
         }
 
         #endregion

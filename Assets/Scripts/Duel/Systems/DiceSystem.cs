@@ -72,7 +72,7 @@ namespace Duel.Systems
                 var faceValue = _dice.Throw();
                 if(faceValue.HasValue)
                 {
-                    Debug.Log($"Threw {faceValue}");
+                    // Debug.Log($"Threw {faceValue}");
                     _isThrew = false;
                     _context.FaceValue = faceValue;
                 }

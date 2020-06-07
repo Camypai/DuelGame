@@ -25,6 +25,7 @@ namespace Duel.Systems
             _systemCollection.Add(new WeaponSystem(context, services));
             _systemCollection.Add(new StatusSystem(context, services));
             _systemCollection.Add(new InputSystem(context, services));
+            _systemCollection.Add(new TurnBaseSystem(context, services));
         }
 
         #endregion

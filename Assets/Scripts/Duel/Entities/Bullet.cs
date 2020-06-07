@@ -36,7 +36,7 @@ namespace Duel.Entities
 
         public void Fire()
         {
-            MoveToStartPosition();
+            // MoveToStartPosition();
             var direction = new Vector3(0f,0f, _direction);
             Debug.Log(direction);
             _rigidbody.AddForce(direction * _speed, ForceMode.Acceleration);

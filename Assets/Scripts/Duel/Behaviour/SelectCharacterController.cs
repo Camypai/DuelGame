@@ -71,16 +71,16 @@ namespace Duel.Behaviour
         {
             if (stream.IsWriting)
             {
-                Debug.Log(_characterType);
+                // Debug.Log(_characterType);
                 stream.SendNext(_characterType);
             }
             else
             {
                 var characterType = (CharacterType) stream.ReceiveNext();
-                Debug.Log(characterType);
+                // Debug.Log(characterType);
                 foreach (var button in _buttons)
                 {
-                    Debug.Log(button.name);
+                    // Debug.Log(button.name);
                     var characterSelect = button.GetComponent<CharacterSelect>();
                     if (characterSelect != null && characterSelect.CharacterType == characterType)
                     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Duel.Contexts;
 using Duel.Enums;
@@ -6,6 +7,7 @@ using Duel.Models;
 using Duel.Services;
 using Duel.Systems;
 using ExitGames.Client.Photon;
+using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -29,8 +31,9 @@ namespace Duel.Behaviour
             _context  = GameContext.GetGameContext();
             _services = UsableServices.SharedInstance;
             _services.Initialize(_context);
-            
-            _context.Images.AddRange(canvas.GetComponentsInChildren<Image>().Where(q => q.GetComponent<HealthBar>() != null));
+
+            _context.Images.AddRange(canvas.GetComponentsInChildren<Image>()
+                                           .Where(q => q.GetComponent<HealthBar>() != null));
 
             PhotonNetwork.AddCallbackTarget(this);
 
@@ -96,6 +99,29 @@ namespace Duel.Behaviour
                     break;
                 case EventType.RefreshEnemyHealthPoint:
                     _context.OppositeHealthPoints = (float) photonEvent.CustomData;
+                    break;
+                case EventType.FirstTurn:
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        var player = _context.Players.First(q => q.Id == photonEvent.Sender);
+                        player.FaceValue = (int) photonEvent.CustomData;
+                    }
+
+                    break;
+                case EventType.BeginOfTurn:
+                    var players =
+                        JsonConvert.DeserializeObject<List<Prototypes.Player>>(photonEvent.CustomData.ToString());
+
+                    _context.Players.AddRange(players);
+                    _context.TurnType = _context.Players
+                                                .First(q => q.Id == PhotonNetwork.LocalPlayer.ActorNumber)
+                                                .TurnType;
+                    break;
+                case EventType.EndOfTurn:
+                    break;
+                case EventType.ContinueTurn:
+                    break;
+                case EventType.PlayTurn:
                     break;
                 default:
                     break;

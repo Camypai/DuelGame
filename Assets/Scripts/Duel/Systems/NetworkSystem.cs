@@ -86,7 +86,7 @@ Message: {message}");
 
         private void Log(string message)
         {
-            Debug.Log(message);
+            // Debug.Log(message);
             _log.text += $@"
 {message}";
         }
