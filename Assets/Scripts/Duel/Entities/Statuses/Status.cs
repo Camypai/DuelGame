@@ -1,4 +1,5 @@
-﻿using Duel.ScriptableObjects;
+﻿using Duel.Enums;
+using Duel.ScriptableObjects;
 
 
 namespace Duel.Entities.Statuses
@@ -9,6 +10,7 @@ namespace Duel.Entities.Statuses
 
         public float Time;
         public float Interval;
+        public StatusType StatusType;
         protected State State;
 
         protected float _damage;
@@ -22,6 +24,7 @@ namespace Duel.Entities.Statuses
         {
             Time = statusObject.time;
             Interval = statusObject.interval;
+            StatusType = statusObject.statusType;
             _damage = statusObject.damage;
         }
 

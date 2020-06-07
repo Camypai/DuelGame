@@ -16,13 +16,14 @@ namespace Duel.Systems
 
         #region ctor
 
-        public GameSystem(GameContext context, UsableServices services)
+        public GameSystem(Context context, UsableServices services)
         {
             _systemCollection.Add(new SetupSystem(context, services));
             _systemCollection.Add(new WorldSystem(context, services));
             _systemCollection.Add(new DiceSystem(context, services));
             _systemCollection.Add(new CharacterSystem(context, services));
             _systemCollection.Add(new WeaponSystem(context, services));
+            _systemCollection.Add(new StatusSystem(context, services));
             _systemCollection.Add(new InputSystem(context, services));
         }
 

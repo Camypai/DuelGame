@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e41916b983e24359be8ab4bddda934db, type: 3}
-  m_Name: character
+  m_Name: player_character
   m_EditorClassIdentifier: 
-  character: {fileID: 3350380224097588032, guid: be27aa4fcf5c0bf44bb27df46ad14a5b,
+  character: {fileID: 5990127994731914806, guid: 06f719e3e03426a4cab4413222be2af2,
     type: 3}
   stateObject: {fileID: 11400000, guid: e6803f99ffece764189a511549d0418e, type: 2}
+  characterType: 1

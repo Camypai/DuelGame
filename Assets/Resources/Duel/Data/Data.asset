@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702be750b5be488d8028f435a871a7ee, type: 3}
   m_Name: Data
   m_EditorClassIdentifier: 
-  diceObjectPath: dice_object
-  characterObjectPath: character
+  diceObjectPath: player_dice
+  characterObjectPath: player_character
   weaponObjectPath: weapon
+  statusesObjectPath: statuses
+  positionsObjectPath: positions
+  worldObjectPath: world

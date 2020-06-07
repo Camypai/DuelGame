@@ -31,7 +31,7 @@ namespace Duel.Systems
         #endregion
 
 
-        #region Public methods
+        #region IAwakeSystem
 
         public void Awake()
         {
@@ -39,15 +39,25 @@ namespace Duel.Systems
             Log($"Player's name is {PhotonNetwork.NickName}");
 
             PhotonNetwork.AutomaticallySyncScene = true;
-            PhotonNetwork.GameVersion = Version.CurrentVersion;
+            PhotonNetwork.GameVersion = Constant.Version;
             PhotonNetwork.ConnectUsingSettings();
         }
+
+        #endregion
+
+
+        #region IConnectionSystem
 
         public void Connect()
         {
             Log("Connected to master");
             Log(PhotonNetwork.NickName);
         }
+
+        #endregion
+
+
+        #region Public methods
 
         public void Play()
         {
@@ -57,7 +67,7 @@ namespace Duel.Systems
         public void JoinedRoom()
         {
             Log("Joined room");
-            
+
             PhotonNetwork.LoadLevel(1);
         }
 
