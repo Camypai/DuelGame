@@ -20,9 +20,10 @@ namespace Duel.Systems
         #region Private data
 
         private readonly GameContext _context;
-        private int _turnCount;
-        private Player _player1;
-        private Player _player2;
+        private          int         _turnCount;
+        private          Player      _player1;
+        private          Player      _player2;
+        private          bool        _haveCalculated = false;
 
         #endregion
 
@@ -32,34 +33,25 @@ namespace Duel.Systems
         public TurnBaseSystem(Context context, UsableServices services) : base(context, services)
         {
             _turnCount = 1;
-            _context = _mainContext as GameContext;
+            _context   = _mainContext as GameContext;
         }
 
         #endregion
 
 
         #region Private methods
-        
+
         private void BeginOfTurn()
         {
-            if (_turnCount == 1)
-            {
-                _context.NeedThrow = true;
-            }
-            else
-            {
-                
-            }
         }
 
         private void EndOfTurn()
         {
-            
         }
 
         private void SendFirstTurn(int? value)
         {
-            if(_turnCount == 1)
+            if (_turnCount == 1)
             {
                 PhotonNetwork.RaiseEvent((byte) EventType.FirstTurn, value.Value,
                                          new RaiseEventOptions {Receivers = ReceiverGroup.MasterClient},
@@ -69,28 +61,49 @@ namespace Duel.Systems
 
         private void ComputeFirstTurnType()
         {
-            if (_player1.FaceValue.Equals(_player2.FaceValue))
+            if (!_haveCalculated)
             {
-                _context.NeedThrow = true;
-            }
-            else if(_player1.FaceValue > _player2.FaceValue)
-            {
-                _player1.TurnType = TurnType.Attack;
-                _player2.TurnType = TurnType.Defence;
-            }
-            else
-            {
-                _player2.TurnType = TurnType.Attack;
-                _player1.TurnType = TurnType.Defence;
-            }
+                if (_player1.FaceValue.Equals(_player2.FaceValue))
+                {
+                    Roll();
+                }
+                else
+                {
+                    if (_player1.FaceValue > _player2.FaceValue)
+                    {
+                        _player1.TurnType = TurnType.Attack;
+                        _player2.TurnType = TurnType.Defence;
+                    }
+                    else
+                    {
+                        _player2.TurnType = TurnType.Attack;
+                        _player1.TurnType = TurnType.Defence;
+                    }
 
-            var players = JsonConvert.SerializeObject(_context.Players);
-            
-            Debug.Log(players);
-            
-            PhotonNetwork.RaiseEvent((byte) EventType.BeginOfTurn, players,
-                                     new RaiseEventOptions {Receivers = ReceiverGroup.All},
-                                     SendOptions.SendReliable);
+                    _haveCalculated = true;
+
+                    var players = JsonConvert.SerializeObject(_context.Players);
+
+                    Debug.Log(players);
+                    Debug.Log(_haveCalculated);
+
+                    PhotonNetwork.RaiseEvent((byte) EventType.BeginOfTurn, players,
+                                             new RaiseEventOptions {Receivers = ReceiverGroup.All},
+                                             SendOptions.SendReliable);
+                }
+            }
+        }
+
+        private void Roll()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                _player1.FaceValue = null;
+                _player2.FaceValue = null;
+                PhotonNetwork.RaiseEvent((byte) EventType.Roll, null,
+                                         new RaiseEventOptions {Receivers = ReceiverGroup.All},
+                                         SendOptions.SendReliable);
+            }
         }
 
         #endregion
@@ -100,7 +113,7 @@ namespace Duel.Systems
 
         public void Start()
         {
-            _context.NeedThrow = true;
+            Roll();
         }
 
         #endregion
@@ -110,7 +123,7 @@ namespace Duel.Systems
 
         public void Awake()
         {
-            if(PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
                 foreach (var player in PhotonNetwork.CurrentRoom.Players)
                 {
@@ -123,10 +136,10 @@ namespace Duel.Systems
                 _player1 = _context.Players.First();
                 _player2 = _context.Players.Last();
             }
-            
-            _context.EndOfTurnNotify += EndOfTurn;
+
+            _context.EndOfTurnNotify   += EndOfTurn;
             _context.BeginOfTurnNotify += BeginOfTurn;
-            _context.FaceValueNotify += SendFirstTurn;
+            _context.FaceValueNotify   += SendFirstTurn;
         }
 
         #endregion
@@ -136,7 +149,7 @@ namespace Duel.Systems
 
         public void FixedUpdate()
         {
-            if (_turnCount == 1 && _context.Players.All(q => q.FaceValue != 0))
+            if (PhotonNetwork.IsMasterClient && _turnCount == 1 && _context.Players.All(q => q.FaceValue.HasValue))
             {
                 ComputeFirstTurnType();
             }

@@ -109,10 +109,11 @@ namespace Duel.Behaviour
 
                     break;
                 case EventType.BeginOfTurn:
+                    Debug.Log($"Begin of turn: {photonEvent.CustomData}");
                     var players =
                         JsonConvert.DeserializeObject<List<Prototypes.Player>>(photonEvent.CustomData.ToString());
 
-                    _context.Players.AddRange(players);
+                    _context.Players = players;
                     _context.TurnType = _context.Players
                                                 .First(q => q.Id == PhotonNetwork.LocalPlayer.ActorNumber)
                                                 .TurnType;
@@ -122,6 +123,9 @@ namespace Duel.Behaviour
                 case EventType.ContinueTurn:
                     break;
                 case EventType.PlayTurn:
+                    break;
+                case EventType.Roll:
+                    _context.NeedThrow = true;
                     break;
                 default:
                     break;

@@ -10,6 +10,7 @@
         BeginOfTurn             = 5,
         EndOfTurn               = 6,
         ContinueTurn            = 7,
-        PlayTurn                = 8
+        PlayTurn                = 8,
+        Roll                    = 9
     }
 }

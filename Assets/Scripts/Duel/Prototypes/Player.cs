@@ -8,7 +8,7 @@ namespace Duel.Prototypes
     public class Player
     {
         public int Id;
-        public int FaceValue;
+        public int? FaceValue;
         public TurnType TurnType = TurnType.None;
     }
 }

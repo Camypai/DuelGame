@@ -9,9 +9,7 @@ namespace Duel.ScriptableObjects
     {
         public Vector3 spawnMasterPosition;
         public Vector3 spawnOtherPosition;
-        public Vector3 cameraMasterPosition;
-        public Vector3 cameraMasterRotate;
-        public Vector3 cameraOtherPosition;
-        public Vector3 cameraOtherRotate;
+        public Vector3 inventoryMasterPosition;
+        public Vector3 inventoryOtherPosition;
     }
 }
