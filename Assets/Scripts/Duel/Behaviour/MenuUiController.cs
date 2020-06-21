@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Duel.Behaviour
 {
-    public class UiController : MonoBehaviour
+    public class MenuUiController : MonoBehaviour
     {
         private MenuContext _menuContext;
         

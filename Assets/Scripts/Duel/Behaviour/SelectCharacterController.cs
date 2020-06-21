@@ -14,21 +14,21 @@ namespace Duel.Behaviour
 {
     public class SelectCharacterController : MonoBehaviour, IPunObservable, IPunOwnershipCallbacks
     {
-        [SerializeField] 
+        [SerializeField]
         private GameObject canvas;
 
-        private MenuContext _menuContext;
-        private PhotonView _photonView;
-        private List<Button> _buttons;
+        private MenuContext   _menuContext;
+        private PhotonView    _photonView;
+        private List<Button>  _buttons;
         private CharacterType _characterType = CharacterType.None;
-        private bool _playerSelected;
-        private bool _otherSelected;
-        private bool _isLoaded = false;
+        private bool          _playerSelected;
+        private bool          _otherSelected;
+        private bool          _isLoaded = false;
 
         private void Awake()
         {
             _menuContext = MenuContext.GetMenuContext();
-            _buttons = new List<Button>();
+            _buttons     = new List<Button>();
             _buttons.AddRange(canvas.GetComponentsInChildren<Button>());
             _photonView = GetComponent<PhotonView>();
         }
@@ -40,7 +40,7 @@ namespace Duel.Behaviour
                 PhotonNetwork.LoadLevel(3);
                 _isLoaded = true;
             }
-            
+
             switch (_menuContext.UiButton)
             {
                 case UiButton.None:
@@ -56,9 +56,9 @@ namespace Duel.Behaviour
                 case UiButton.Select:
                     _photonView.RequestOwnership();
                     var character = _menuContext.SelectedButton.gameObject.GetComponent<CharacterSelect>();
-                    _characterType = character.CharacterType;
+                    _characterType                         = character.CharacterType;
                     _menuContext.CharacterObject.character = _menuContext.SelectCharacter;
-                    _playerSelected = true;
+                    _playerSelected                        = true;
                     break;
                 default:
                     break;
@@ -71,16 +71,16 @@ namespace Duel.Behaviour
         {
             if (stream.IsWriting)
             {
-                Debug.Log(_characterType);
+                // Debug.Log(_characterType);
                 stream.SendNext(_characterType);
             }
             else
             {
-                var characterType = (CharacterType)stream.ReceiveNext();
-                Debug.Log(characterType);
+                var characterType = (CharacterType) stream.ReceiveNext();
+                // Debug.Log(characterType);
                 foreach (var button in _buttons)
                 {
-                    Debug.Log(button.name);
+                    // Debug.Log(button.name);
                     var characterSelect = button.GetComponent<CharacterSelect>();
                     if (characterSelect != null && characterSelect.CharacterType == characterType)
                     {

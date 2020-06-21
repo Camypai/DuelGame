@@ -5,11 +5,11 @@ namespace Duel.Contexts
 {
     public abstract class Context
     {
-        public DiceObject DiceObject;
+        public DiceObject      DiceObject;
         public CharacterObject CharacterObject;
-        public WeaponObject WeaponObject;
-        public StatusesObject StatusesObject;
+        public WeaponObject    WeaponObject;
+        public StatusesObject  StatusesObject;
         public PositionsObject PositionsObject;
-        public WorldObject WorldObject;
+        public WorldObject     WorldObject;
     }
 }

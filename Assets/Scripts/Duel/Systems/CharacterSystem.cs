@@ -77,7 +77,7 @@ namespace Duel.Systems
                 _character.Defeat();
             }
 
-            if (_context.GameEnd && !_context.State.IsDead)
+            if (_context.GameIsEnd && !_context.State.IsDead)
             {
                 _character.Victory();
             }

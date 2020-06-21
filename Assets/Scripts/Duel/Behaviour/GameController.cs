@@ -1,35 +1,44 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Duel.Contexts;
-using Duel.Entities.Statuses;
 using Duel.Enums;
-using Duel.Helpers;
+using Duel.Models;
 using Duel.Services;
 using Duel.Systems;
 using ExitGames.Client.Photon;
+using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.UI;
+using EventType = Duel.Enums.EventType;
 
 
 namespace Duel.Behaviour
 {
     public class GameController : MonoBehaviour, IOnEventCallback, IPunOwnershipCallbacks
     {
-        private GameSystem _gameSystem;
+        [SerializeField]
+        private GameObject canvas;
+
+        private GameSystem     _gameSystem;
         private UsableServices _services;
-        private GameContext _context;
+        private GameContext    _context;
 
         private void Awake()
         {
-            _context = new GameContext();
+            _context  = GameContext.GetGameContext();
             _services = UsableServices.SharedInstance;
             _services.Initialize(_context);
-            
+
+            _context.Images.AddRange(canvas.GetComponentsInChildren<Image>()
+                                           .Where(q => q.GetComponent<HealthBar>() != null));
+
             PhotonNetwork.AddCallbackTarget(this);
-            
+
             _gameSystem = new GameSystem(_context, _services);
-            
+
             _gameSystem.Awake();
         }
 
@@ -47,7 +56,7 @@ namespace Duel.Behaviour
         {
             _services.Update();
             _services.Dispose();
-            
+
             _gameSystem.FixedUpdate();
         }
 
@@ -67,10 +76,12 @@ namespace Duel.Behaviour
 
         public void OnEvent(EventData photonEvent)
         {
-            switch (photonEvent.Code)
+            switch ((EventType) photonEvent.Code)
             {
-                case 1:
-                    switch ((StatusType)photonEvent.CustomData)
+                case EventType.None:
+                    break;
+                case EventType.Status:
+                    switch ((StatusType) photonEvent.CustomData)
                     {
                         case StatusType.None:
                             break;
@@ -81,9 +92,38 @@ namespace Duel.Behaviour
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
+
                     break;
-                case 2:
-                    _context.GameEnd = true;
+                case EventType.GameIsEnd:
+                    _context.GameIsEnd = true;
+                    break;
+                case EventType.RefreshEnemyHealthPoint:
+                    _context.OppositeHealthPoints = (float) photonEvent.CustomData;
+                    break;
+                case EventType.FirstTurn:
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        var player = _context.Players.First(q => q.Id == photonEvent.Sender);
+                        player.FaceValue = (int) photonEvent.CustomData;
+                    }
+
+                    break;
+                case EventType.BeginOfTurn:
+                    var players =
+                        JsonConvert.DeserializeObject<List<Prototypes.Player>>(photonEvent.CustomData.ToString());
+
+                    _context.Players.AddRange(players);
+                    _context.TurnType = _context.Players
+                                                .First(q => q.Id == PhotonNetwork.LocalPlayer.ActorNumber)
+                                                .TurnType;
+                    break;
+                case EventType.EndOfTurn:
+                    break;
+                case EventType.ContinueTurn:
+                    break;
+                case EventType.PlayTurn:
+                    break;
+                default:
                     break;
             }
         }
