@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Duel.Contexts;
 using Duel.Enums;
+using Duel.Helpers;
 using Duel.Models;
+using Duel.Prototypes;
 using Duel.Services;
 using Duel.Systems;
 using ExitGames.Client.Photon;
@@ -34,6 +36,7 @@ namespace Duel.Behaviour
 
             _context.Images.AddRange(canvas.GetComponentsInChildren<Image>()
                                            .Where(q => q.GetComponent<HealthBar>() != null));
+            _context.Camera = Camera.main;
 
             PhotonNetwork.AddCallbackTarget(this);
 
@@ -81,17 +84,9 @@ namespace Duel.Behaviour
                 case EventType.None:
                     break;
                 case EventType.Status:
-                    switch ((StatusType) photonEvent.CustomData)
-                    {
-                        case StatusType.None:
-                            break;
-                        case StatusType.Damage:
-                            var statuses = _context.Statuses.Where(q => q.StatusType == StatusType.Damage);
-                            _context.GetStatuses.AddRange(statuses);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                    var statusesPrototype =
+                        JsonConvert.DeserializeObject<List<StatusPrototype>>(photonEvent.CustomData.ToString());
+                    _context.GetStatuses.AddRange(statusesPrototype.Select(Invoker.CreateStatus));
 
                     break;
                 case EventType.GameIsEnd:
@@ -103,20 +98,21 @@ namespace Duel.Behaviour
                 case EventType.FirstTurn:
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        var player = _context.Players.First(q => q.Id == photonEvent.Sender);
-                        player.FaceValue = (int) photonEvent.CustomData;
+                        var player = _context.Players.First(q => q.id == photonEvent.Sender);
+                        player.faceValue = (int) photonEvent.CustomData;
                     }
 
                     break;
                 case EventType.BeginOfTurn:
                     Debug.Log($"Begin of turn: {photonEvent.CustomData}");
                     var players =
-                        JsonConvert.DeserializeObject<List<Prototypes.Player>>(photonEvent.CustomData.ToString());
+                        JsonConvert.DeserializeObject<List<Prototypes.PlayerPrototype>>(
+                            photonEvent.CustomData.ToString());
 
                     _context.Players = players;
                     _context.TurnType = _context.Players
-                                                .First(q => q.Id == PhotonNetwork.LocalPlayer.ActorNumber)
-                                                .TurnType;
+                                                .First(q => q.id == PhotonNetwork.LocalPlayer.ActorNumber)
+                                                .turnType;
                     break;
                 case EventType.EndOfTurn:
                     break;

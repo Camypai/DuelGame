@@ -24,6 +24,7 @@ namespace Duel.ScriptableObjects
         [SerializeField] private string statusesObjectPath;
         [SerializeField] private string positionsObjectPath;
         [SerializeField] private string worldObjectPath;
+        [SerializeField] private string itemObjectPath;
         private static Data _instance;
         private static DiceObject _diceObject;
         private static CharacterObject _characterObject;

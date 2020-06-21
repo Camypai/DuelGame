@@ -1,4 +1,5 @@
 ﻿using Duel.Enums;
+using Duel.Prototypes;
 using Duel.ScriptableObjects;
 
 
@@ -20,12 +21,20 @@ namespace Duel.Entities.Statuses
 
         #region ctor
 
-        public Status(StatusObject statusObject)
+        protected Status(StatusObject statusObject)
         {
             Time = statusObject.time;
             Interval = statusObject.interval;
             StatusType = statusObject.statusType;
             _damage = statusObject.damage;
+        }
+
+        protected Status(StatusPrototype statusPrototype)
+        {
+            Time       = statusPrototype.time;
+            Interval   = statusPrototype.interval;
+            StatusType = statusPrototype.statusType;
+            _damage    = statusPrototype.damage;
         }
 
         #endregion

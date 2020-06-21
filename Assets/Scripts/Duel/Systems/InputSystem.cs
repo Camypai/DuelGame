@@ -59,6 +59,23 @@ namespace Duel.Systems
             {
                 _context.NeedThrow = true;
             }
+
+            if (Input.GetMouseButton(0))
+            {
+                Debug.Log("Click");
+                Debug.Log(_context.Camera);
+                var        ray = _context.Camera.ScreenPointToRay(Input.mousePosition);
+                
+                if (Physics.Raycast(ray, out var hit)) {
+                    var objectHit = hit.transform;
+            
+                    var item = objectHit.GetComponent<Item>();
+                    if (item != null)
+                    {
+                        Debug.Log("Select");
+                    }
+                }
+            }
         }
 
         #endregion

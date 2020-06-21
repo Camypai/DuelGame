@@ -2,7 +2,8 @@
 {
     public enum StatusType
     {
-        None           = 0,
-        Damage         = 1
+        None    = 0,
+        Damage  = 1,
+        Defence = 2
     }
 }
