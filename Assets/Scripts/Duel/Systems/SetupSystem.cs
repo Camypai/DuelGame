@@ -28,6 +28,7 @@ namespace Duel.Systems
             _mainContext.StatusesObject = Data.StatusesObject;
             _mainContext.PositionsObject = Data.PositionsObject;
             _mainContext.WorldObject = Data.WorldObject;
+            _mainContext.BoardObject = Data.BoardObject;
         }
 
         #endregion        

@@ -17,7 +17,7 @@ namespace Duel.Entities
 
         private readonly GameObject _dice;
         private readonly Rigidbody _rigidbody;
-        private readonly List<Models.Face> _faces = new List<Models.Face>();
+        private readonly List<Models.FaceModel> _faces = new List<Models.FaceModel>();
 
         private readonly float _strength;
         private readonly Vector3 _activePosition;
@@ -35,7 +35,7 @@ namespace Duel.Entities
             _dice = PhotonNetwork.Instantiate($"{Constant.NetworkPrefabsPath}{diceObject.dice.name}", diceObject.activePosition, Quaternion.identity);
             BackToTheHidePosition();
 
-            _faces.AddRange(_dice.GetComponentsInChildren<Models.Face>());
+            _faces.AddRange(_dice.GetComponentsInChildren<Models.FaceModel>());
 
 
             _activePosition = diceObject.activePosition;

@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace Duel.Models
 {
-    public class HealthBar : MonoBehaviour
+    public class HealthBarModel : MonoBehaviour
     {
         public PlayerType playerType;
     }

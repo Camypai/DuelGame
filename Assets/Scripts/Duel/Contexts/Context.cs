@@ -11,5 +11,6 @@ namespace Duel.Contexts
         public StatusesObject  StatusesObject;
         public PositionsObject PositionsObject;
         public WorldObject     WorldObject;
+        public BoardObject     BoardObject;
     }
 }

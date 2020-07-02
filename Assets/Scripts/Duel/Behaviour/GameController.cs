@@ -35,7 +35,7 @@ namespace Duel.Behaviour
             _services.Initialize(_context);
 
             _context.Images.AddRange(canvas.GetComponentsInChildren<Image>()
-                                           .Where(q => q.GetComponent<HealthBar>() != null));
+                                           .Where(q => q.GetComponent<HealthBarModel>() != null));
             _context.Camera = Camera.main;
 
             PhotonNetwork.AddCallbackTarget(this);

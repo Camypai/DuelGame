@@ -26,7 +26,7 @@ namespace Duel.Behaviour
 
         public void UpdateHealthBar(PlayerType playerType, float value)
         {
-            var image = _gameContext.Images.First(q => q.GetComponent<HealthBar>().playerType == playerType);
+            var image = _gameContext.Images.First(q => q.GetComponent<HealthBarModel>().playerType == playerType);
             image.fillAmount = value / 100;
         }
     }

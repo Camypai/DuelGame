@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Duel.Models
 {
-    public class Dice : MonoBehaviour
+    public class DiceModel : MonoBehaviour
     {
         [SerializeField] private Material _otherDiceMaterial;
 
