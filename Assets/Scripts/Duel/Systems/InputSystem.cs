@@ -33,7 +33,7 @@ namespace Duel.Systems
         private void UpdateState(PlayerType playerType, float value)
         {
             Debug.Log(_context.Images.Count);
-            var image = _context.Images.First(q => q.GetComponent<HealthBar>().playerType == playerType);
+            var image = _context.Images.First(q => q.GetComponent<HealthBarModel>().playerType == playerType);
             image.fillAmount = value / 100;
         }
 
@@ -58,6 +58,23 @@ namespace Duel.Systems
             if (!_context.GameIsEnd && Input.GetKeyDown(KeyCode.Space))
             {
                 _context.NeedThrow = true;
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                Debug.Log("Click");
+                Debug.Log(_context.Camera);
+                var        ray = _context.Camera.ScreenPointToRay(Input.mousePosition);
+                
+                if (Physics.Raycast(ray, out var hit)) {
+                    var objectHit = hit.transform;
+            
+                    var item = objectHit.GetComponent<ItemModel>();
+                    if (item != null)
+                    {
+                        Debug.Log("Select");
+                    }
+                }
             }
         }
 

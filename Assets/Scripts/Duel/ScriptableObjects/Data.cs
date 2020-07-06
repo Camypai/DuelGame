@@ -24,6 +24,8 @@ namespace Duel.ScriptableObjects
         [SerializeField] private string statusesObjectPath;
         [SerializeField] private string positionsObjectPath;
         [SerializeField] private string worldObjectPath;
+        [SerializeField] private string itemObjectPath;
+        [SerializeField] private string boardObjectPath;
         private static Data _instance;
         private static DiceObject _diceObject;
         private static CharacterObject _characterObject;
@@ -31,6 +33,7 @@ namespace Duel.ScriptableObjects
         private static StatusesObject _statusesObject;
         private static PositionsObject _positionsObject;
         private static WorldObject _worldObject;
+        private static BoardObject _boardObject;
 
         #endregion
         
@@ -125,6 +128,19 @@ namespace Duel.ScriptableObjects
                 }
 
                 return _worldObject;
+            }
+        }
+        
+        public static BoardObject BoardObject 
+        {
+            get
+            {
+                if (_boardObject == null)
+                {
+                    _boardObject = Load<BoardObject>($"{BasePath}{Instance.boardObjectPath}");
+                }
+
+                return _boardObject;
             }
         }
 

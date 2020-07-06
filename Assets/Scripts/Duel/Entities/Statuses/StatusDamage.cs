@@ -1,4 +1,5 @@
-﻿using Duel.ScriptableObjects;
+﻿using Duel.Prototypes;
+using Duel.ScriptableObjects;
 using UnityEngine;
 
 
@@ -7,6 +8,10 @@ namespace Duel.Entities.Statuses
     public class StatusDamage : Status
     {
         public StatusDamage(StatusObject statusObject) : base(statusObject)
+        {
+        }
+        
+        public StatusDamage(StatusPrototype statusPrototype) : base(statusPrototype)
         {
         }
 

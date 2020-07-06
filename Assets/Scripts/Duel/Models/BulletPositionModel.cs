@@ -3,7 +3,7 @@
 
 namespace Duel.Models
 {
-    public class BulletPosition : MonoBehaviour
+    public class BulletPositionModel : MonoBehaviour
     {
         
     }

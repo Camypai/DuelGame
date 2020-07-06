@@ -18,3 +18,5 @@ MonoBehaviour:
   cameraMasterRotate: {x: 25, y: 0, z: 0}
   cameraOtherPosition: {x: 0.39, y: 20.87, z: 24.9}
   cameraOtherRotate: {x: 25, y: -180, z: 0}
+  inventoryMasterPosition: {x: 0, y: 0, z: -30}
+  inventoryOtherPosition: {x: 0, y: 0, z: -1}

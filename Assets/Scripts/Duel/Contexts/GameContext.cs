@@ -91,9 +91,10 @@ namespace Duel.Contexts
         public bool             TakeStatus  = false;
         public bool             GameIsEnd   = false;
         public List<Image>      Images      = new List<Image>();
-        public List<Player>     Players     = new List<Player>();
+        public List<PlayerPrototype>     Players     = new List<PlayerPrototype>();
         public TurnType         TurnType;
         public bool             PlayTurn;
+        public Camera           Camera;
 
         #endregion
 

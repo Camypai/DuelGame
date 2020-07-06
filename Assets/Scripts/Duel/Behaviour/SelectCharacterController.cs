@@ -55,7 +55,7 @@ namespace Duel.Behaviour
                     break;
                 case UiButton.Select:
                     _photonView.RequestOwnership();
-                    var character = _menuContext.SelectedButton.gameObject.GetComponent<CharacterSelect>();
+                    var character = _menuContext.SelectedButton.gameObject.GetComponent<CharacterSelectModel>();
                     _characterType                         = character.CharacterType;
                     _menuContext.CharacterObject.character = _menuContext.SelectCharacter;
                     _playerSelected                        = true;
@@ -81,7 +81,7 @@ namespace Duel.Behaviour
                 foreach (var button in _buttons)
                 {
                     // Debug.Log(button.name);
-                    var characterSelect = button.GetComponent<CharacterSelect>();
+                    var characterSelect = button.GetComponent<CharacterSelectModel>();
                     if (characterSelect != null && characterSelect.CharacterType == characterType)
                     {
                         button.interactable = false;

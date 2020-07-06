@@ -34,16 +34,6 @@ namespace Duel.Systems
 
         public void Awake()
         {
-            var position = PhotonNetwork.IsMasterClient
-                ? _context.PositionsObject.cameraMasterPosition
-                : _context.PositionsObject.cameraOtherPosition;
-
-            var rotate = PhotonNetwork.IsMasterClient
-                ? _context.PositionsObject.cameraMasterRotate
-                : _context.PositionsObject.cameraOtherRotate;
-            var worldCamera = Object.Instantiate(_context.WorldObject.Camera, position,
-                Quaternion.Euler(rotate));
-
             foreach (var statusObject in _context.StatusesObject.Statuses)
             {
                 _context.Statuses.Add(Invoker.CreateStatus(statusObject));

@@ -3,6 +3,7 @@ using System.Linq;
 using Duel.Contexts;
 using Duel.Enums;
 using Duel.Interfaces;
+using Duel.Prototypes;
 using Duel.Services;
 using ExitGames.Client.Photon;
 using Newtonsoft.Json;
@@ -10,7 +11,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using EventType = Duel.Enums.EventType;
-using Player = Duel.Prototypes.Player;
 
 
 namespace Duel.Systems
@@ -20,9 +20,10 @@ namespace Duel.Systems
         #region Private data
 
         private readonly GameContext _context;
-        private int _turnCount;
-        private Player _player1;
-        private Player _player2;
+        private          int         _turnCount;
+        private          PlayerPrototype      _player1;
+        private          PlayerPrototype      _player2;
+        private          bool        _haveCalculated = false;
 
         #endregion
 
@@ -32,34 +33,25 @@ namespace Duel.Systems
         public TurnBaseSystem(Context context, UsableServices services) : base(context, services)
         {
             _turnCount = 1;
-            _context = _mainContext as GameContext;
+            _context   = _mainContext as GameContext;
         }
 
         #endregion
 
 
         #region Private methods
-        
+
         private void BeginOfTurn()
         {
-            if (_turnCount == 1)
-            {
-                _context.NeedThrow = true;
-            }
-            else
-            {
-                
-            }
         }
 
         private void EndOfTurn()
         {
-            
         }
 
         private void SendFirstTurn(int? value)
         {
-            if(_turnCount == 1)
+            if (_turnCount == 1)
             {
                 PhotonNetwork.RaiseEvent((byte) EventType.FirstTurn, value.Value,
                                          new RaiseEventOptions {Receivers = ReceiverGroup.MasterClient},
@@ -69,28 +61,49 @@ namespace Duel.Systems
 
         private void ComputeFirstTurnType()
         {
-            if (_player1.FaceValue.Equals(_player2.FaceValue))
+            if (!_haveCalculated)
             {
-                _context.NeedThrow = true;
-            }
-            else if(_player1.FaceValue > _player2.FaceValue)
-            {
-                _player1.TurnType = TurnType.Attack;
-                _player2.TurnType = TurnType.Defence;
-            }
-            else
-            {
-                _player2.TurnType = TurnType.Attack;
-                _player1.TurnType = TurnType.Defence;
-            }
+                if (_player1.faceValue.Equals(_player2.faceValue))
+                {
+                    Roll();
+                }
+                else
+                {
+                    if (_player1.faceValue > _player2.faceValue)
+                    {
+                        _player1.turnType = TurnType.Attack;
+                        _player2.turnType = TurnType.Defence;
+                    }
+                    else
+                    {
+                        _player2.turnType = TurnType.Attack;
+                        _player1.turnType = TurnType.Defence;
+                    }
 
-            var players = JsonConvert.SerializeObject(_context.Players);
-            
-            Debug.Log(players);
-            
-            PhotonNetwork.RaiseEvent((byte) EventType.BeginOfTurn, players,
-                                     new RaiseEventOptions {Receivers = ReceiverGroup.All},
-                                     SendOptions.SendReliable);
+                    _haveCalculated = true;
+
+                    var players = JsonConvert.SerializeObject(_context.Players);
+
+                    Debug.Log(players);
+                    Debug.Log(_haveCalculated);
+
+                    PhotonNetwork.RaiseEvent((byte) EventType.BeginOfTurn, players,
+                                             new RaiseEventOptions {Receivers = ReceiverGroup.All},
+                                             SendOptions.SendReliable);
+                }
+            }
+        }
+
+        private void Roll()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                _player1.faceValue = null;
+                _player2.faceValue = null;
+                PhotonNetwork.RaiseEvent((byte) EventType.Roll, null,
+                                         new RaiseEventOptions {Receivers = ReceiverGroup.All},
+                                         SendOptions.SendReliable);
+            }
         }
 
         #endregion
@@ -100,7 +113,7 @@ namespace Duel.Systems
 
         public void Start()
         {
-            _context.NeedThrow = true;
+            Roll();
         }
 
         #endregion
@@ -110,23 +123,23 @@ namespace Duel.Systems
 
         public void Awake()
         {
-            if(PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
                 foreach (var player in PhotonNetwork.CurrentRoom.Players)
                 {
-                    _context.Players.Add(new Player
+                    _context.Players.Add(new PlayerPrototype
                     {
-                        Id = player.Value.ActorNumber
+                        id = player.Value.ActorNumber
                     });
                 }
 
                 _player1 = _context.Players.First();
                 _player2 = _context.Players.Last();
             }
-            
-            _context.EndOfTurnNotify += EndOfTurn;
+
+            _context.EndOfTurnNotify   += EndOfTurn;
             _context.BeginOfTurnNotify += BeginOfTurn;
-            _context.FaceValueNotify += SendFirstTurn;
+            _context.FaceValueNotify   += SendFirstTurn;
         }
 
         #endregion
@@ -136,7 +149,7 @@ namespace Duel.Systems
 
         public void FixedUpdate()
         {
-            if (_turnCount == 1 && _context.Players.All(q => q.FaceValue != 0))
+            if (PhotonNetwork.IsMasterClient && _turnCount == 1 && _context.Players.All(q => q.faceValue.HasValue))
             {
                 ComputeFirstTurnType();
             }

@@ -3,7 +3,7 @@
 
 namespace Duel.Models
 {
-    public class Face : MonoBehaviour
+    public class FaceModel : MonoBehaviour
     {
         public int Value;
     }
